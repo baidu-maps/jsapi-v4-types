@@ -1,0 +1,35 @@
+{
+  "name": "@baidumap/jsapi-v4-types",
+  "version": "4.0.0",
+  "description": "TypeScript type declarations for Baidu Map JSAPI 4.0",
+  "types": "index.d.ts",
+  "keywords": [
+    "baidu",
+    "baidumap",
+    "baidu-map",
+    "map",
+    "jsapi",
+    "typescript",
+    "types",
+    "typings",
+    "bmap",
+    "gis"
+  ],
+  "homepage": "https://lbs.baidu.com/docs/jsapi?title=jsapi4/index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baidu-maps/jsapi-v4-types.git"
+  },
+  "bugs": {
+    "url": "https://github.com/baidu-maps/jsapi-v4-types/issues"
+  },
+  "files": [
+    "**/*.d.ts",
+    "package.json",
+    "README.md"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
