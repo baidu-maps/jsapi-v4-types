@@ -20,6 +20,17 @@ declare namespace BMap {
      */
     expand?: boolean;
     /**
+     * 自定义触发元素，用于替代默认的城市切换按钮。自定义元素按钮可以方便您统一页面样式。
+     * 传入一个 DOM 元素后，点击该元素即可展开/收起城市列表。如需动态修改自定义触发按钮的文案，可通过配置初始化参数中的回调函数实现
+     * @example
+     * ```typescript
+     * const trigger = document.getElementById('my-city-btn');
+     * const cityList = new BMap.CityListControl({ trigger });
+     * map.addControl(cityList);
+     * ```
+     */
+    trigger?: HTMLElement;
+    /**
      * 切换城市前触发的回调函数
      */
     onChangeBefore?: () => void;

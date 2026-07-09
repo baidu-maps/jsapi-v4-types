@@ -7,6 +7,7 @@ declare namespace BMap {
      * 图标的定位锚点，相对于图标左上角的偏移值。
      * 例如Icon大小为30x30，设置为 `new Size(15, 30)` 表示以底边中心作为锚点
      * @default 图标宽高的中间值
+     * @deprecated 4.0起不再建议使用，请使用 {@link MarkerOptions#anchor} 配置项替代
      */
     anchor?: Size;
     /**

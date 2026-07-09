@@ -1,6 +1,8 @@
 declare namespace BMap {
   /**
    * 此类表示地图的3D控件，可对地图进行旋转以及切换2D/3D展示效果。
+   * anchor属性为整体停靠位置。
+   * 控件尺寸为 52px x 88px。
      */
   class NavigationControl3D {
     /**

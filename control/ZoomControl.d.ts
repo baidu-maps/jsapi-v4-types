@@ -1,6 +1,8 @@
 declare namespace BMap {
   /**
-   * 此类表示缩放控件。
+   * 此类表示缩放控件，包含缩放地图的+和-按钮。
+   * anchor属性为整体停靠位置。
+   * 控件尺寸固定为 32px x 68px。
      */
   class ZoomControl {
     /**

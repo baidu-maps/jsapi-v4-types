@@ -746,21 +746,21 @@ declare namespace BMap {
      */
     hideOverlayContainer(): void;
     /**
-     * 设置个性化地图，参数为个性化配置对象，支持通过 styleId、styleJson两种设置个性化地图样式。
-     * styleId和 styleJson 的获取地址：https://lbsyun.baidu.com/apiconsole/custommap。
-     * styleId必须由AK所属账号创建，否则将无权限获取样式。
+     * 设置个性化地图，参数为个性化配置对象，支持通过 styleId、styleJson 两种方式设置个性化地图样式。
+     * styleId 和 styleJson 的获取地址：https://lbsyun.baidu.com/apiconsole/custommap。
+     * styleId 必须由 AK 所属账号创建，否则将无权限获取样式。
      * @param config 个性化地图样式配置对象
      * @example 使用 styleId
      * ```typescript
-     * map.setMapStyleV2({ styleId: 'your-style-id' });
+     * map.setMapStyle({ styleId: 'your-style-id' });
      * ```
      * @example 使用 styleId，并启用 v3 样式（支持室内图）
      * ```typescript
-     * map.setMapStyleV2({ styleId: 'your-style-id', version: 'v3' });
+     * map.setMapStyle({ styleId: 'your-style-id', version: 'v3' });
      * ```
      * @example 使用 styleJson 内联样式（通过个性化编辑器导出的 JSON）
      * ```typescript
-     * map.setMapStyleV2({
+     * map.setMapStyle({
      *   styleJson: [
      *     { featureType: 'land', elementType: 'geometry', stylers: { color: '#f5f4f4ff' } },
      *     { featureType: 'water', elementType: 'geometry', stylers: { color: '#86cee6ff' } },
@@ -772,6 +772,10 @@ declare namespace BMap {
      *   ]
      * });
      * ```
+     */
+    setMapStyle(config: MapStyleConfig): void;
+    /**
+     * @deprecated 请使用 {@link setMapStyle}
      */
     setMapStyleV2(config: MapStyleConfig): void;
     /**
@@ -867,7 +871,7 @@ declare namespace BMap {
     /**
      * 获取地图截图，地球模式不支持。需要初始化地图配置preserveDrawingBuffer：true，否则是黑屏
      */
-    getMapScreenshot(): string;
+    getScreenshot(): string;
     /**
      * 设置版权信息位置，其中logo为logo位置，copyright为文字位置
      * @param logo logo 位置配置，包含 x、y 偏移量
@@ -904,6 +908,29 @@ declare namespace BMap {
      * ```
      */
     removeLayer(layer: object): void;
+
+    /**
+     * 在地图上打开信息窗口
+     * @param infoWnd 信息窗口实例
+     * @param point 信息窗口显示的地理坐标
+     */
+    openInfoWindow(infoWnd: InfoWindow, point: Point): void;
+    /**
+     * 关闭在地图上打开的信息窗口。在标注上打开的信息窗口也可通过此方法进行关闭
+     */
+    closeInfoWindow(): void;
+    /**
+     * 添加一个自定义地图图层
+     * @deprecated 4.0 请使用 {@link addLayer}
+     * @param tileLayer 自定义图层实例
+     */
+    addTileLayer(tileLayer: TileLayer): void;
+    /**
+     * 移除一个自定义地图图层
+     * @deprecated 4.0 请使用 {@link removeLayer}
+     * @param tileLayer 要移除的自定义图层实例
+     */
+    removeTileLayer(tileLayer: TileLayer): void;
 
     /**
      * 添加事件监听。支持类型推导：当 `event` 为 `MapEventMap` 中的已知事件名时，

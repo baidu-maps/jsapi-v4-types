@@ -1,6 +1,10 @@
 declare namespace BMap {
   /**
    * 此类表示比例尺控件。
+   * anchor属性为整体停靠位置。
+   * 控件宽度不固定。
+   * 高度为 20px。
+   * 默认位置为百度地图logo右侧（如果放在左下角，尽量不要设置offset）。
    */
   class ScaleControl {
     /**

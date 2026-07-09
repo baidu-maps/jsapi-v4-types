@@ -1,6 +1,18 @@
 declare namespace BMap {
   /**
    * 此类表示地图的平移缩放控件。
+   * 包含平移、缩放、定位按钮。
+   * anchor属性为整体停靠位置。
+   * type属性为BMAP_NAVIGATION_CONTROL_LARGE时，包含平移按钮、缩放按钮、缩放层级滑块。
+   * 控件尺寸为 50px x 296px。
+   * type属性为BMAP_NAVIGATION_CONTROL_SMALL时，包含平移按钮、缩放按钮。
+   * 控件尺寸为 50px x 116px。
+   * type属性为BMAP_NAVIGATION_CONTROL_PAN时，仅包含平移按钮。
+   * 控件尺寸为 50px x 50px。
+   * type属性为BMAP_NAVIGATION_CONTROL_ZOOM时，仅包含缩放按钮。
+   * 控件尺寸为 26px x 66px。
+   * enableGeolocation属性为true时，包含定位按钮。
+   * 控件高度增加 36px。
    */
   class NavigationControl {
     /**

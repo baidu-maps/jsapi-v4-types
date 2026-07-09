@@ -17,6 +17,24 @@ declare namespace BMap {
      */
     mapType?: MapTypeId;
     /**
+     * 地图初始中心点。需与 zoom 一同传入才会自动初始化视野。
+     */
+    center?: Point;
+    /**
+     * 地图初始缩放级别。需与 center 一同传入才会自动初始化视野。
+     */
+    zoom?: number;
+    /**
+     * 地图初始旋转角度，0 表示正北，顺时针为正，单位为度，取值范围 [0, 360)。
+     * @default 0
+     */
+    heading?: number;
+    /**
+     * 地图初始倾斜角度，0 表示俯视，单位为度，取值范围 [0, 73]。
+     * @default 0
+     */
+    tilt?: number;
+    /**
      * 是否允许拖拽（包括了旋转、倾斜、移动）
      * @default true
      */
@@ -33,7 +51,7 @@ declare namespace BMap {
     enableDblclickZoom?: boolean;
     /**
      * 是否允许鼠标滚轮、触摸板滑动缩放地图
-     * @default false
+     * @default true
      */
     enableWheelZoom?: boolean;
     /**
@@ -82,14 +100,17 @@ declare namespace BMap {
      */
     zoomCenter?: Point;
     /**
-     * 指定地图显示的范围，地图根据容器大小以及该范围限制中心点和级别的变化。
-     */
-    restrictBounds?: Bounds | null;
-    /**
-     * 是否允许底图标注可点。开启后当点击到底图图标时，map 的 `click` 事件参数会包含点击的信息。
-     * @default false
+     * 是否允许底图标注可点。开启后当点击到底图图标时，map 的 `click` 事件参数会包含点击的信息，同时会有点击气泡效果。
+     * @default true
      */
     enableIconClick?: boolean;
+
+    /**
+     * 点击底图标注时，是否显示信息窗，在enableIconClick为true时生效
+     * @default false
+     */
+    enableIconInfoWindow: boolean;
+
     /**
      * 配置地图显示元素。该参数详细信息请参见 setDisplayOptions 方法。
      */
@@ -104,5 +125,29 @@ declare namespace BMap {
      * @default true
      */
     enableAdaptiveMinZoom?: boolean;
+    /**
+     * 初始地图中心点，支持经纬度坐标。设置后 Map 初始化时直接应用该中心点，
+     */
+    center?: Point;
+    /**
+     * 初始缩放级别，取值范围 [3, 21]
+     */
+    zoom?: number;
+    /**
+     * 初始地图旋转角度（顺时针），0 表示正北朝上
+     * @default 0
+     */
+    heading?: number;
+    /**
+     * 初始地图倾斜角度，取值范围 [0, 73]。级别越高允许的倾斜角越大。
+     * @default 0
+     */
+    tilt?: number;
+    /**
+     * 是否开启底图可点功能
+     * @deprecated 4.0 在4.0中，启用此选项时，效果等价于同时启用enableIconClick和enableIconInfoWindow
+     * @default 3.0版本默认为true，4.0后默认为false
+     */
+    enableMapClick?: boolean;
   }
 }

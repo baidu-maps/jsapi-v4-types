@@ -12,6 +12,11 @@ declare namespace BMap {
      */
     icon?: Icon;
     /**
+     * 标注锚点位置，设置后覆盖 Icon 自身的 anchor
+     * @default BMAP_ANCHOR_CENTER
+     */
+    anchor?: ControlAnchor;
+    /**
      * 是否在调用 map.clearOverlays() 时清除此覆盖物
      * @default true
      */

@@ -13,6 +13,11 @@ declare namespace BMap {
      */
     position?: Point;
     /**
+     * 文本标注的锚点位置
+     * @default BMAP_ANCHOR_TOP_LEFT
+     */
+    anchor?: ControlAnchor;
+    /**
      * 是否在调用 map.clearOverlays() 时清除此覆盖物
      * @default true
      */

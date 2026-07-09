@@ -62,6 +62,19 @@ declare namespace BMap {
      */
     getOffset(): Size;
     /**
+     * 设置文本标注的锚点位置
+     * @param anchor 锚点枚举值
+     * @example
+     * ```typescript
+     * label.setAnchor(BMAP_ANCHOR_BOTTOM_CENTER);
+     * ```
+     */
+    setAnchor(anchor: ControlAnchor): void;
+    /**
+     * 返回文本标注的锚点位置
+     */
+    getAnchor(): ControlAnchor;
+    /**
      * 设置文本标注的标题，鼠标悬停时显示
      * @param title 标题文字
      * @example

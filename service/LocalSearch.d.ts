@@ -100,6 +100,10 @@ declare namespace BMap {
      */
     clearResults(): void;
     /**
+     * 清除选中项，同时清除地图上选中项的弹窗
+     */
+    clearSelected(): void;
+    /**
      * 跳转到指定页的检索结果，页码无效时触发 onSearchComplete 并设状态为 INVALID_REQUEST
      * @param page 页码，从 0 开始，最大为 getNumPages() - 1
      * @example
