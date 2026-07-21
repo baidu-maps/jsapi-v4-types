@@ -20,6 +20,6 @@ declare namespace BMap {
      * });
      * ```
      */
-    get(name: string, callback: Function): null;
+    get(name: string, callback: Function): void;
   }
 }

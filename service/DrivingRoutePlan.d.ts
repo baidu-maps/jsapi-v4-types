@@ -13,7 +13,11 @@ declare namespace BMap {
     getDuration(format?: boolean): string | number;
     /** 此路线道路收费，单位：元 */
     getToll(): number;
-    /** 油费，单位元 */
-    getOilCost(): number;
+    /** 返回方案的收费距离，单位：米 */
+    getTollDistance(): number;
+    /** 返回方案中索引指定的路段 */
+    getRoute(i: number): Route;
+    /** 返回方案包含的路段个数 */
+    getNumRoutes(): number;
   }
 }

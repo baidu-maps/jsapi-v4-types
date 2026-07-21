@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 此类表示一个棱柱覆盖物。
      */
-  class Prism {
+  class Prism extends Overlay {
     /**
      * 创建棱柱覆盖物对象
      * @param points 底面多边形的坐标点数组
@@ -22,7 +22,7 @@ declare namespace BMap {
      * map.addOverlay(prism);
      * ```
      */
-    constructor(points: Array<Point>, altitude: number, opts?: PrismOptions);
+    constructor(points: Array<Point> | Array<Array<Point>>, altitude: number, opts?: PrismOptions);
     /**
      * 设置底面多边形的坐标点数组
      * @param path 坐标点数组
@@ -128,7 +128,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof PrismEventMap>(event: K, handler: (e: PrismEventMap[K]) => void): void;
     /**
      * 移除事件监听函数
      * @param event 事件名称
@@ -140,6 +140,6 @@ declare namespace BMap {
      * prism.removeEventListener('click', handler);
      * ```
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof PrismEventMap>(event: K, handler: (e: PrismEventMap[K]) => void): void;
   }
 }

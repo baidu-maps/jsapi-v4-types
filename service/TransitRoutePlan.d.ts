@@ -35,7 +35,7 @@ declare namespace BMap {
      * const distance = transitPlan.getDistance(true); // '15.3公里'
      * ```
      */
-    getDistance(format: boolean): string | number;
+    getDistance(format?: boolean): string | number;
     /**
      * 返回方案总时间。当format参数为true时，返回描述时间的字符串（包含单位），当format为false时，仅返回数值（单位为秒）信息。默认参数为true
      * @example
@@ -43,7 +43,7 @@ declare namespace BMap {
      * const duration = transitPlan.getDuration(true); // '约45分钟'
      * ```
      */
-    getDuration(format: boolean): string | number;
+    getDuration(format?: boolean): string | number;
     /**
      * 返回方案描述文本，默认包含HTML标签。当includeHtml为false时，方案描述不包含HTML标签
      * @example
@@ -57,9 +57,9 @@ declare namespace BMap {
      */
     getLinesTitle(): string;
     /**
-     * 返回方案总步行距离，单位为米
+     * 返回方案总步行距离，为格式化后的带单位字符串（如"1.2公里"）
      */
-    getWalkDistance(): number;
+    getWalkDistance(): string;
     /**
      * 返回指定路段的交通方式类型，分别对应Line和Route
      * @example

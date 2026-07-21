@@ -14,7 +14,7 @@ declare namespace BMap {
    * enableGeolocation属性为true时，包含定位按钮。
    * 控件高度增加 36px。
    */
-  class NavigationControl {
+  class NavigationControl extends Control {
     /**
      * 创建平移缩放控件
      * @param opts 可选参数

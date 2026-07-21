@@ -27,5 +27,14 @@ declare namespace BMap {
      * @default true
      */
     enableClicking?: boolean;
+    /**
+     * 文本标注的宽度（像素），0 表示按内容自适应
+     * @default 0
+     */
+    width?: number;
+    /**
+     * 文本标注容器的 CSS 样式，键值对形式（如 { color: '#f00', fontSize: '14px' }）
+     */
+    styles?: object;
   }
 }

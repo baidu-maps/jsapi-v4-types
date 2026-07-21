@@ -24,7 +24,7 @@ declare namespace BMap {
      * const distanceNum = routePlan.getDistance(false); // 12500
      * ```
      */
-    getDistance(format: boolean): string | number;
+    getDistance(format?: boolean): string | number;
     /**
      * 返回方案总时间。当format参数为true时，返回描述时间的字符串（包含单位），当format为false时，仅返回数值（单位为秒）信息。默认参数为true
      * @example
@@ -33,7 +33,7 @@ declare namespace BMap {
      * const durationNum = routePlan.getDuration(false); // 1500
      * ```
      */
-    getDuration(format: boolean): string | number;
+    getDuration(format?: boolean): string | number;
     /**
      * 返回方案的拖拽点信息
      */
@@ -41,6 +41,6 @@ declare namespace BMap {
     /**
      * 返回出租车费用信息
      */
-    getTaxiFare(): TaxiFare;
+    getTaxiFare(): TaxiFare | null;
   }
 }

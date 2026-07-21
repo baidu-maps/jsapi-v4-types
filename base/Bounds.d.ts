@@ -5,8 +5,8 @@ declare namespace BMap {
   class Bounds {
     /**
      * 创建一个包含所有给定点坐标的矩形区域
-     * @param sw 矩形区域的西南角坐标
-     * @param ne 矩形区域的东北角坐标
+     * @param sw 矩形区域的西南角坐标，不传则创建空矩形区域
+     * @param ne 矩形区域的东北角坐标，不传则创建空矩形区域
      * @example
      * ```typescript
      * const bounds = new BMap.Bounds(
@@ -15,7 +15,7 @@ declare namespace BMap {
      * );
      * ```
      */
-    constructor(sw: Point, ne: Point);
+    constructor(sw?: Point, ne?: Point);
     /**
      * 当且仅当此矩形中的两点参数都等于其他矩形的两点参数时，返回 true
      * @param other 待比较的矩形区域
@@ -106,9 +106,19 @@ declare namespace BMap {
      */
     getSouthWest(): Point;
     /**
+     * 设置矩形区域的西南角坐标
+     * @param sw 西南角坐标
+     */
+    setSouthWest(sw: Point): void;
+    /**
      * 返回矩形区域的东北角
      */
     getNorthEast(): Point;
+    /**
+     * 设置矩形区域的东北角坐标
+     * @param ne 东北角坐标
+     */
+    setNorthEast(ne: Point): void;
     /**
      * 返回矩形区域经纬度跨度，以 Point 形式表示（lng 为经度跨度，lat 为纬度跨度）
      */

@@ -1,5 +1,51 @@
 declare namespace BMap {
   /**
+   * GeoJSONLayer 鼠标事件的基础类型
+     */
+  interface GeoJSONLayerMouseEvent {
+    type: string;
+    target: GeoJSONLayer;
+    currentTarget: GeoJSONLayer;
+    pixel: Pixel;
+    /** 事件触发点的地理坐标 */
+    point: Point;
+    latLng: Point;
+  }
+
+  /**
+   * GeoJSONLayer 点击事件
+     */
+  interface GeoJSONLayerClickEvent extends GeoJSONLayerMouseEvent {
+    features: Overlay[] | null;
+  }
+
+  /**
+   * GeoJSONLayer 鼠标移动事件
+     */
+  interface GeoJSONLayerMouseMoveEvent extends GeoJSONLayerMouseEvent {
+    features: Overlay[];
+  }
+
+  /**
+   * GeoJSONLayer 鼠标移出事件
+     */
+  interface GeoJSONLayerMouseOutEvent extends GeoJSONLayerMouseEvent {
+    features: null;
+  }
+
+  /**
+   * GeoJSONLayer 支持的事件名与事件对象类型映射
+     */
+  interface GeoJSONLayerEventMap {
+    /** 点击图层要素时触发 */
+    click: GeoJSONLayerClickEvent;
+    /** 鼠标在图层要素上移动时触发 */
+    mousemove: GeoJSONLayerMouseMoveEvent;
+    /** 鼠标移出图层要素时触发 */
+    mouseout: GeoJSONLayerMouseOutEvent;
+  }
+
+  /**
    * GeoJSON 覆盖物组合图层，用于在地图上展示 GeoJSON 格式的地理数据。
    * 通过 map.addLayer() / map.removeLayer() 方法管理。
      */
@@ -36,6 +82,11 @@ declare namespace BMap {
      * ```
      */
     constructor(layerName: string, options?: GeoJSONLayerOptions);
+    /**
+     * 图层家族标志位，运行时真实存在于原型上，`Map.addLayer()` 依据它分发图层
+     * @hidden
+     */
+    readonly isGeoJSONLayer: true;
     /**
      * 设置图层显示的 GeoJSON 数据源
      * @param geojson GeoJSON 结构数据
@@ -115,7 +166,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    addEventListener(type: string, handler: Function): void;
+    addEventListener<K extends keyof GeoJSONLayerEventMap>(type: K, handler: (e: GeoJSONLayerEventMap[K]) => void): void;
     /**
      * 移除事件监听
      * @param type 事件类型
@@ -127,7 +178,7 @@ declare namespace BMap {
      * geoJSONLayer.removeEventListener('click', handler);
      * ```
      */
-    removeEventListener(type: string, handler: Function): void;
+    removeEventListener<K extends keyof GeoJSONLayerEventMap>(type: K, handler: (e: GeoJSONLayerEventMap[K]) => void): void;
   }
 
   /**

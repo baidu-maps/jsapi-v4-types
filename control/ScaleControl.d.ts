@@ -6,7 +6,7 @@ declare namespace BMap {
    * 高度为 20px。
    * 默认位置为百度地图logo右侧（如果放在左下角，尽量不要设置offset）。
    */
-  class ScaleControl {
+  class ScaleControl extends Control {
     /**
      * 创建比例尺控件
      * @param opts 可选参数

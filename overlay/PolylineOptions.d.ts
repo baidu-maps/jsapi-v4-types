@@ -59,5 +59,10 @@ declare namespace BMap {
      * @default true
      */
     clip?: boolean;
+    /**
+     * 虚线样式配置，如 [8, 4] 表示实线部分长8像素、间隙部分长4像素。
+     * 默认虚线中实线和空隙的长度均为线宽的2倍
+     */
+    dashArray?: number[];
   }
 }

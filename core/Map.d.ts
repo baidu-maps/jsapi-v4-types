@@ -16,11 +16,11 @@ declare namespace BMap {
      * const map = new BMap.Map('container', {
      *   center: new BMap.Point(116.378351, 39.89585),
      *   zoom: 18,
-     *   enableScrollWheelZoom: true
+     *   enableWheelZoom: true
      * });
      * ```
      */
-    constructor(container: string | HTMLElement, options: MapOptions);
+    constructor(container: string | HTMLElement, options?: MapOptions);
     /**
      * 启用地图拖拽，默认启用
      */
@@ -118,27 +118,40 @@ declare namespace BMap {
      */
     disableTiltGestures(): void;
     /**
-     * 设置地图旋转角度
-     * @param heading 旋转角度，单位为度，取值范围 0~360
+     * 设置地图旋转角度。传入任意角度值均可，内部会自动按一周（360 度）归一化，例如传入 450 等价于 90，传入 -90 等价于 270。
+     * @param heading 旋转角度，单位为度。推荐使用 0~360 的罗盘角度（正北 0、正东 90、正南 180、正西 270），超出该范围会被自动归一化
+     * @param options 可选配置参数
      * @example
      * ```typescript
      * map.setHeading(45);
      * ```
      */
-    setHeading(heading: number): void;
+    setHeading(heading: number, options?: {
+      /** 是否关闭动画 */
+      noAnimation?: boolean;
+      /** 动画结束后的回调函数 */
+      callback?: () => void;
+    }): void;
     /**
-     * 获取地图当前旋转角度
+     * 获取地图当前旋转角度。返回值为带符号角度，取值范围 -180~180，正值表示顺时针偏离正北，负值表示逆时针偏离正北。
+     * 注意：返回值与 `setHeading` 的入参不保证数值一致，例如 `setHeading(270)` 后 `getHeading()` 返回 -90。
      */
     getHeading(): number;
     /**
      * 设置地图的倾斜角度
      * @param tilt 倾斜角度，单位为度，取值范围 0~73
+     * @param options 可选配置参数
      * @example
      * ```typescript
      * map.setTilt(45);
      * ```
      */
-    setTilt(tilt: number): void;
+    setTilt(tilt: number, options?: {
+      /** 是否关闭动画 */
+      noAnimation?: boolean;
+      /** 动画结束后的回调函数 */
+      callback?: () => void;
+    }): void;
     /**
      * 获取地图当前倾斜角度
      */
@@ -194,21 +207,41 @@ declare namespace BMap {
     /**
      * 像素坐标转换为经纬度坐标
      * @param pixel 地图像素坐标
+     * @param options 可选配置参数，通过此参数可以获得特定地图状态（中心点、级别、旋转、倾斜）下的坐标值，不传则按当前地图状态换算
      * @example
      * ```typescript
      * const point = map.pixelToPoint(new BMap.Pixel(100, 200));
      * ```
      */
-    pixelToPoint(pixel: Pixel): Point;
+    pixelToPoint(pixel: Pixel, options?: {
+      /** 指定地图的中心点 */
+      center?: Point;
+      /** 指定地图的级别 */
+      zoom?: number;
+      /** 指定地图的正北朝向 */
+      heading?: number;
+      /** 指定地图的倾斜角度 */
+      tilt?: number;
+    }): Point;
     /**
      * 经纬度坐标转换为像素坐标
      * @param point 地理坐标点
+     * @param options 可选配置参数，通过此参数可以获得特定地图状态（中心点、级别、旋转、倾斜）下的坐标值，不传则按当前地图状态换算
      * @example
      * ```typescript
      * const pixel = map.pointToPixel(new BMap.Point(116.404, 39.915));
      * ```
      */
-    pointToPixel(point: Point): Pixel;
+    pointToPixel(point: Point, options?: {
+      /** 指定地图的中心点 */
+      center?: Point;
+      /** 指定地图的级别 */
+      zoom?: number;
+      /** 指定地图的正北朝向 */
+      heading?: number;
+      /** 指定地图的倾斜角度 */
+      tilt?: number;
+    }): Pixel;
     /**
      * 经纬度球体坐标转换为墨卡托平面坐标
      * @param lng 经度
@@ -240,11 +273,12 @@ declare namespace BMap {
     /**
      * 在底图上添加文字，这些文字会和底图文字一同参与避让。
      * @param labels 底图标注数组
+     * @returns 实际写入的 uid 数组，可用 removeMapLabels 移除
      * @example
      * ```typescript
      * map.addMapLabels([
      *   {
-     *     name: '自定义标注',
+     *     text: '自定义标注',
      *     position: new BMap.Point(116.404, 39.915)
      *   }
      * ]);
@@ -254,7 +288,7 @@ declare namespace BMap {
      * map.addMapLabels([
      *   {
      *      position: new BMap.Point(116, 39),
-     *      name: '自定义标注2',
+     *      text: '自定义标注2',
      *      displayRange: [3, 21],
      *      textMargin: 8,
      *       style: {
@@ -269,7 +303,7 @@ declare namespace BMap {
      * ]);
      * ```
      */
-    addMapLabels(labels: MapLabel[]): void;
+    addMapLabels(labels: MapLabel[]): string[];
     /**
      * 从底图上移除文字标注，参数为uid数组，根据数组里的uid进行移除
      * @param labelUids 要移除的标注uid数组
@@ -446,19 +480,15 @@ declare namespace BMap {
      * console.log(vp.center, vp.zoom);
      * ```
      */
-    getViewport(view: Array<Point>, viewportOptions?: ViewportOptions): Viewport;
+    getViewport(view: Array<Point> | Bounds, viewportOptions?: ViewportOptions): Viewport;
     /**
-     * 同时设置地图的中心点和缩放级别。 如果center类型为Point时，zoom必须赋值。如果center类型为字符串时，比如"北京"，zoom可以忽略，地图将自动根据center适配最佳zoom级别。默认无动画效果。
-     * @param center 地图中心点坐标或城市名称
+     * 同时设置地图的中心点和缩放级别。 默认无动画效果。
+     * @param center 地图中心点坐标
      * @param zoom 缩放级别
      * @param options 可选配置参数
      * @example
      * ```typescript
      * map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
-     * ```
-     * @example 使用地址字符串作为中心点
-     * ```typescript
-     * map.centerAndZoom('北京', 12);
      * ```
      * @example启用动画
      * ```typescript
@@ -474,7 +504,30 @@ declare namespace BMap {
      * });
      * ```
      */
-    centerAndZoom(center: Point | string, zoom: number, options?: {
+    centerAndZoom(center: Point, zoom: number, options?: {
+      /**
+       * 是否禁用动画效果
+       * @default true
+       */
+      noAnimation?: boolean;
+      /** 动画完成后的回调函数 */
+      callback?: () => void;
+    }): void;
+    /**
+     * 按城市名设置地图中心点和缩放级别。不传zoom时，地图将自动适配展示该城市的最佳缩放级别
+     * @param city 城市名称，如"北京"
+     * @param zoom 缩放级别，不传则自动适配
+     * @param options 可选配置参数
+     * @example
+     * ```typescript
+     * map.centerAndZoom('北京');
+     * ```
+     * @example 指定缩放级别
+     * ```typescript
+     * map.centerAndZoom('北京', 12);
+     * ```
+     */
+    centerAndZoom(city: string, zoom?: number, options?: {
       /**
        * 是否禁用动画效果
        * @default true
@@ -525,12 +578,18 @@ declare namespace BMap {
      * 将地图在水平位置上移动x像素，垂直位置上移动y像素。如果指定的像素大于可视区域范围或者在配置中指定没有动画效果，则不执行滑动效果
      * @param x 水平方向移动的像素数，正值向右
      * @param y 垂直方向移动的像素数，正值向下
+     * @param options 可选配置参数
      * @example
      * ```typescript
      * map.panBy(100, -50);
      * ```
      */
-    panBy(x: number, y: number): void;
+    panBy(x: number, y: number, options?: {
+      /** 是否关闭动画 */
+      noAnimation?: boolean;
+      /** 动画结束后的回调函数 */
+      callback?: () => void;
+    }): void;
     /**
      * 飞到指定的中心点和级别，提供给定位缩放地图使用
      * @param center 目标中心点
@@ -627,12 +686,14 @@ declare namespace BMap {
     getZoom(): number;
     /**
      * 放大一级视图
+     * @param zoomCenter 放大的中心点，默认为地图中心点
      */
-    zoomIn(): void;
+    zoomIn(zoomCenter?: Point): void;
     /**
      * 缩小一级视图
+     * @param zoomCenter 缩小的中心点，默认为地图中心点
      */
-    zoomOut(): void;
+    zoomOut(zoomCenter?: Point): void;
     /**
      * 将控件添加到地图，一个控件实例只能向地图中添加一次
      * @param control 控件实例
@@ -710,21 +771,33 @@ declare namespace BMap {
     /**
      * 根据地理坐标获取对应的覆盖物容器的坐标，此方法用于自定义覆盖物
      * @param point 地理坐标点
+     * @param options 可选配置参数，通过此参数可以获得特定地图状态（中心点、级别）下的坐标值，不传则按当前地图状态换算
      * @example
      * ```typescript
      * const pixel = map.pointToOverlayPixel(new BMap.Point(116.404, 39.915));
      * ```
      */
-    pointToOverlayPixel(point: Point): Pixel;
+    pointToOverlayPixel(point: Point, options?: {
+      /** 指定地图的中心点 */
+      center?: Point;
+      /** 指定地图的级别 */
+      zoom?: number;
+    }): Pixel;
     /**
      * 根据覆盖物容器的坐标获取对应的地理坐标
      * @param pixel 覆盖物容器像素坐标
+     * @param options 可选配置参数，通过此参数可以获得特定地图状态（中心点、级别）下的坐标值，不传则按当前地图状态换算
      * @example
      * ```typescript
      * const point = map.overlayPixelToPoint(new BMap.Pixel(100, 200));
      * ```
      */
-    overlayPixelToPoint(pixel: Pixel): Point;
+    overlayPixelToPoint(pixel: Pixel, options?: {
+      /** 指定地图的中心点 */
+      center?: Point;
+      /** 指定地图的级别 */
+      zoom?: number;
+    }): Point;
     /**
      * 获取当前地图上的所有覆盖物，返回覆盖物对象的集合
      */
@@ -898,7 +971,20 @@ declare namespace BMap {
      * map.addLayer(lineLayer);
      * ```
      */
-    addLayer(layer: object): void;
+    addLayer(
+      layer:
+        | TileLayer
+        | RasterTileLayer
+        | WMSLayer
+        | WMTSLayer
+        | GeoJSONLayer
+        | DistrictLayer
+        | DOMLayer
+        | LineLayer
+        | FillLayer
+        | PointShapeLayer
+        | PointIconLayer
+    ): void;
     /**
      * 统一移除图层方法，自动根据图层类型分发到对应处理逻辑
      * @param layer 图层实例
@@ -907,7 +993,20 @@ declare namespace BMap {
      * map.removeLayer(lineLayer);
      * ```
      */
-    removeLayer(layer: object): void;
+    removeLayer(
+      layer:
+        | TileLayer
+        | RasterTileLayer
+        | WMSLayer
+        | WMTSLayer
+        | GeoJSONLayer
+        | DistrictLayer
+        | DOMLayer
+        | LineLayer
+        | FillLayer
+        | PointShapeLayer
+        | PointIconLayer
+    ): void;
 
     /**
      * 在地图上打开信息窗口
@@ -933,8 +1032,7 @@ declare namespace BMap {
     removeTileLayer(tileLayer: TileLayer): void;
 
     /**
-     * 添加事件监听。支持类型推导：当 `event` 为 `MapEventMap` 中的已知事件名时，
-     * 回调参数 `e` 自动推导为对应的事件对象类型。
+     * 添加事件监听
      * @param event 事件名称
      * @param handler 事件处理函数
      * @example click 点击

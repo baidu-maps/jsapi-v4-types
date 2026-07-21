@@ -8,8 +8,10 @@ declare namespace BMap {
      */
     constructor();
     /**
-     * 初始化控件，当调用 map.addControl() 时触发。
-     * 自定义控件需实现此方法并返回控件的 DOM 元素，DOM 元素需通过 map.getContainer() 添加到地图容器中
+     * 抽象生命周期方法，用于初始化控件，当调用 map.addControl() 时内部将调用此方法。
+     *
+     * **仅在自定义控件时需要实现此方法**，并返回控件的 DOM 元素，DOM 元素需通过 map.getContainer() 添加到地图容器中。
+     * 内置控件（`ZoomControl`、`ScaleControl` 等）已在内部实现，用户无需调用也无需重写。
      * @param map 地图实例
      * @example
      * ```typescript

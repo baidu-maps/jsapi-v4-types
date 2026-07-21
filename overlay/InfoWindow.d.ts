@@ -126,7 +126,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof InfoWindowEventMap>(event: K, handler: (e: InfoWindowEventMap[K]) => void): void;
     /**
      * 移除事件监听函数
      * @param event 事件名称
@@ -138,6 +138,6 @@ declare namespace BMap {
      * infoWindow.removeEventListener('close', handler);
      * ```
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof InfoWindowEventMap>(event: K, handler: (e: InfoWindowEventMap[K]) => void): void;
   }
 }

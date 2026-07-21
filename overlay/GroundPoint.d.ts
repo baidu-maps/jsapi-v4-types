@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 贴地点覆盖物，继承 GroundOverlay。
      */
-  class GroundPoint {
+  class GroundPoint extends Overlay {
     /**
      * 创建贴地点覆盖物，该覆盖物的大小为墨卡托坐标系下的实际大小，屏幕空间的大小会随着地图的缩放级别变化而变化。
      * @param point 地理坐标点
@@ -26,7 +26,7 @@ declare namespace BMap {
      * groundPoint.setPoint(new BMap.Point(116.410, 39.920), true);
      * ```
      */
-    setPoint(point: Point, update?: boolean): void;
+    setPoint(point: Point, update?: boolean): this;
     /**
      * 设置缩放比例
      * @param scale 缩放比例
@@ -36,7 +36,7 @@ declare namespace BMap {
      * groundPoint.setScale(1.5, true);
      * ```
      */
-    setScale(scale: number, update?: boolean): void;
+    setScale(scale: number, update?: boolean): this;
     /**
      * 设置图标尺寸
      * @param size 尺寸，单位像素
@@ -46,7 +46,7 @@ declare namespace BMap {
      * groundPoint.setSize(new BMap.Size(48, 48), true);
      * ```
      */
-    setSize(size: Size, update?: boolean): void;
+    setSize(size: Size, update?: boolean): this;
     /**
      * 设置旋转角度
      * @param angle 旋转角度，单位度
@@ -56,7 +56,7 @@ declare namespace BMap {
      * groundPoint.setRotation(90, true);
      * ```
      */
-    setRotation(angle: number, update?: boolean): void;
+    setRotation(angle: number, update?: boolean): this;
     /**
      * 设置锚点位置
      * @param anchor 锚点偏移量
@@ -66,7 +66,7 @@ declare namespace BMap {
      * groundPoint.setAnchor(new BMap.Size(16, 16), true);
      * ```
      */
-    setAnchor(anchor: Size, update?: boolean): void;
+    setAnchor(anchor: Size, update?: boolean): this;
     /**
      * 设置偏移量
      * @param offset 偏移量
@@ -76,6 +76,6 @@ declare namespace BMap {
      * groundPoint.setOffset(new BMap.Size(5, -5), true);
      * ```
      */
-    setOffset(offset: Size, update?: boolean): void;
+    setOffset(offset: Size, update?: boolean): this;
   }
 }

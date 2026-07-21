@@ -88,7 +88,6 @@ declare namespace BMap {
 
   /**
    * 地图事件名称到事件对象类型的完整映射表。
-   * 与 `Map.addEventListener` 配合使用，可获得精确的事件参数类型推导。
    * @example
    * ```typescript
    * map.addEventListener('click', (e) => {

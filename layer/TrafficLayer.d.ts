@@ -5,13 +5,19 @@ declare namespace BMap {
   class TrafficLayer extends TileLayer {
     /**
      * 创建交通流量图层
+     * @param options 可选配置参数
      * @example
      * ```typescript
      * const trafficLayer = new BMap.TrafficLayer();
      * map.addLayer(trafficLayer);
      * ```
      */
-    constructor();
+    constructor(options?: {
+      /** 是否自动刷新路况数据 */
+      autoRefresh?: boolean;
+      /** 路况自动刷新间隔，单位毫秒 */
+      refreshInterval?: number;
+    });
     /**
      * 修改路况颜色
      * @param colors 路况颜色数组，按畅通、缓行、拥堵、严重拥堵顺序，支持CSS颜色字符串

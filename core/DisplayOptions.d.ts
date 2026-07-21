@@ -37,7 +37,7 @@ declare namespace BMap {
     building?: boolean;
     /**
      * 是否显示室内图（仅支持 WebGL 方式渲染的地图）
-     * @default true
+     * @default false
      */
     indoor?: boolean;
     /**

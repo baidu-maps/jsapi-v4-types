@@ -10,18 +10,48 @@ declare namespace BMap {
      */
     opacity?: number;
     /**
-     * 图层图片或视频地址
+     * 叠加内容来源。type 为 'image' 时传图片地址，'video' 时传视频地址，'canvas' 时直接传 canvas 元素
      */
-    url?: string;
+    url?: string | HTMLCanvasElement;
     /**
-     * 图层显示的最小缩放级别
-     * @default 3
+     * 图层显示的最小缩放级别，默认值为 3
      */
     displayOnMinLevel?: number;
     /**
-     * 图层显示的最大缩放级别
-     * @default 21
+     * 图层显示的最大缩放级别，默认值为 21
      */
     displayOnMaxLevel?: number;
+    /**
+     * 叠加内容类型
+     * @default 'image'
+     */
+    type?: 'image' | 'video' | 'canvas';
+    /**
+     * 是否开启循环重绘，type 为 'canvas' 时生效。
+     * 开启后每帧渲染前都会调用 drawHook 并重新采集 canvas 内容作为贴图，用于实现动态效果（如雷达扫描、水波动画）；
+     * 关闭则 canvas 内容仅在初始化时采集一次，作为静态贴图
+     * @default false
+     */
+    isReDraw?: boolean;
+    /**
+     * 自定义绘制回调，type 为 'canvas' 且开启 isReDraw 时每帧渲染前调用。
+     * @example
+     * ```typescript
+     * const canvas = document.createElement('canvas');
+     * const ctx = canvas.getContext('2d');
+     * let angle = 0;
+     * const overlay = new BMap.GroundOverlay(bounds, {
+     *   type: 'canvas',
+     *   url: canvas,
+     *   isReDraw: true,
+     *   drawHook: () => {
+     *     ctx.clearRect(0, 0, canvas.width, canvas.height);
+     *     // 绘制旋转扫描效果，每帧更新
+     *     angle += 0.02;
+     *   },
+     * });
+     * ```
+     */
+    drawHook?: () => void;
   }
 }

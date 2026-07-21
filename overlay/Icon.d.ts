@@ -4,8 +4,8 @@ declare namespace BMap {
    */
   class Icon {
     /**
-     * 以给定的图像地址和大小创建图标对象实例
-     * @param url 图片资源地址
+     * 以给定的图像和大小创建图标对象实例
+     * @param image 图标图片，可传入图片地址，也可直接传入 Canvas 或 Image 元素
      * @param size 图标可视区域的大小
      * @param opts 可选参数
      * @example
@@ -30,7 +30,7 @@ declare namespace BMap {
      * );
      * ```
      */
-    constructor(url: string, size: Size, opts?: IconOptions);
+    constructor(image: string | HTMLCanvasElement | HTMLImageElement, size: Size, opts?: IconOptions);
     /**
      * 设置图片资源的地址
      * @param imageUrl 图片 URL

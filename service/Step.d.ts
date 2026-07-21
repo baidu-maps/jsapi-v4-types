@@ -28,7 +28,7 @@ declare namespace BMap {
      * const distanceNum = step.getDistance(false); // 200
      * ```
      */
-    getDistance(format: boolean): string | number;
+    getDistance(format?: boolean): string | number;
     /**
      * 返回本关键点所属路线的索引
      */

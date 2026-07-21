@@ -4,7 +4,10 @@ declare namespace BMap {
    */
   class Overlay {
     /**
-     * 抽象方法，用于初始化覆盖物，当调用map.addOverlay时，API将调用此方法。自定义覆盖物时需要实现此方法。自定义覆盖物时需要将覆盖物对应的HTML元素返回
+     * 抽象生命周期方法，用于初始化覆盖物，当调用map.addOverlay时，API内部将调用此方法。
+     *
+     * **仅在自定义覆盖物时需要实现此方法**，并返回覆盖物对应的HTML元素。
+     * 内置覆盖物（`Marker`、`Polyline`、`Polygon` 等）已在内部实现，用户无需调用也无需重写。
      * @example
      * ```typescript
      * class MyOverlay extends BMap.Overlay {
@@ -24,7 +27,9 @@ declare namespace BMap {
      */
     isVisible(): boolean;
     /**
-     * 抽象方法，当地图状态发生变化时，由系统调用对覆盖物进行绘制。自定义覆盖物需要实现此方法
+     * 抽象生命周期方法，当地图状态发生变化时调用，对覆盖物进行绘制。
+     *
+     * **仅在自定义覆盖物时需要实现此方法**。内置覆盖物已在内部实现，用户无需调用也无需重写。
      */
     draw(): void;
     /**

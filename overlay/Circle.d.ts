@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 此类表示地图上的圆形覆盖物。
    */
-  class Circle {
+  class Circle extends Overlay {
     /**
      * 创建圆形覆盖物对象
      * @param center 圆心坐标
@@ -163,7 +163,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof CircleEventMap>(event: K, handler: (e: CircleEventMap[K]) => void): void;
     /**
      * 移除事件监听函数
      * @param event 事件名称
@@ -175,6 +175,6 @@ declare namespace BMap {
      * circle.removeEventListener('click', handler);
      * ```
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof CircleEventMap>(event: K, handler: (e: CircleEventMap[K]) => void): void;
   }
 }

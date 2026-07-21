@@ -19,7 +19,7 @@ declare namespace BMap {
     /**
      * 显示的文字内容
      */
-    name?: string;
+    text?: string;
     /**
      * 样式配置信息
      */
@@ -28,6 +28,18 @@ declare namespace BMap {
      * 权重，值越高优先级越高
      */
     rank?: number;
+    /**
+     * 唯一标识，不传则自动生成
+     */
+    uid?: string;
+    /**
+     * 文字位于坐标的方向，取值为：0, 1, 2, 3, 4 分别表示bottom, right, top, left, center
+     */
+    direction?: number;
+    /**
+     * 类型，默认为fixed（固定标注），此外还有line（道路标注）、biaopai(标牌)
+     */
+    type?: string;
   }
 
   /**
@@ -59,17 +71,5 @@ declare namespace BMap {
      * icon的宽度和高度，按照1x的显示尺寸给出，[width, height]
      */
     iconSize?: number[];
-    /**
-     * 文字对应的唯一标识
-     */
-    guid?: string;
-    /**
-     * 文字位于坐标的方向，取值为：0, 1, 2, 3, 4 分别表示bottom, right, top, left, center
-     */
-    direction?: number;
-    /**
-     * 类型，默认为fixed（固定标注），此外还有line（道路标注）、biaopai(标牌)
-     */
-    type?: string;
   }
 }

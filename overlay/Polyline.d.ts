@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 使用浏览器的矢量制图工具在地图上绘制折线的覆盖物。
    */
-  class Polyline {
+  class Polyline extends Overlay {
     /**
      * 创建折线覆盖物对象
      * @param points 折线的坐标点数组
@@ -149,7 +149,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof PolylineEventMap>(event: K, handler: (e: PolylineEventMap[K]) => void): void;
     /**
      * 移除事件监听函数
      * @param event 事件名称
@@ -161,6 +161,6 @@ declare namespace BMap {
      * polyline.removeEventListener('click', handler);
      * ```
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof PolylineEventMap>(event: K, handler: (e: PolylineEventMap[K]) => void): void;
   }
 }
