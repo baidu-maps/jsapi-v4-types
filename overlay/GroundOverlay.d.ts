@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 此类表示地图上的地面叠加层，可叠加图片、视频或 Canvas 内容。
    */
-  class GroundOverlay {
+  class GroundOverlay extends Overlay {
     /**
      * 创建地面叠加层覆盖物
      * @param bounds 叠加层显示的矩形区域
@@ -53,12 +53,20 @@ declare namespace BMap {
     /**
      * 设置图层图片地址
      * @param url 图片URL
+     * @param bounds 可选，同时更新叠加的地理范围
      * @example
      * ```typescript
      * groundOverlay.setImage('https://jsapi-demo.bj.bcebos.com/images/markers/marker_demo_9.png');
      * ```
      */
-    setImage(url: string): void;
+    setImage(url: string, bounds?: Bounds): void;
+    /**
+     * 设置图层的图片地址
+     * @deprecated 4.0 请使用 {@link setImage}
+     * @param url 图片地址
+     * @param bounds 可选，同时更新叠加的地理范围
+     */
+    setImageURL(url: string, bounds?: Bounds): void;
     /**
      * 返回图层图片地址
      */

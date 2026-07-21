@@ -52,12 +52,16 @@ declare namespace BMap {
      * 发起驾车路线检索。驾车不支持关键字检索，起终点必须为坐标或 POI
      * @param start 起点
      * @param end 终点
+     * @param options 可选配置参数，支持 waypoints 途经点
      * @example
      * ```typescript
      * drivingRoute.search(new BMap.Point(116.391, 39.910), new BMap.Point(116.431, 39.931));
      * ```
      */
-    search(start: Point | LocalResultPoi, end: Point | LocalResultPoi): void;
+    search(start: Point | LocalResultPoi, end: Point | LocalResultPoi, options?: {
+      /** 途经点坐标数组 */
+      waypoints?: Array<Point>;
+    }): void;
     /**
      * 返回最近一次检索的结果
      */

@@ -21,7 +21,7 @@ declare namespace BMap {
     expand?: boolean;
     /**
      * 自定义触发元素，用于替代默认的城市切换按钮。自定义元素按钮可以方便您统一页面样式。
-     * 传入一个 DOM 元素后，点击该元素即可展开/收起城市列表。如需动态修改自定义触发按钮的文案，可通过配置初始化参数中的回调函数实现
+     * 传入一个 DOM 元素后，点击该元素即可展开/收起城市列表。如需动态修改自定义触发按钮的文案，可通过回调函数实现。
      * @example
      * ```typescript
      * const trigger = document.getElementById('my-city-btn');
@@ -39,8 +39,22 @@ declare namespace BMap {
      */
     onChangeAfter?: () => void;
     /**
-     * 切换城市成功后触发的回调函数
+     * 切换城市成功后触发的回调函数，控件初始化完成后也会触发一次，可在回调中获取当前城市名
+     * @param poi 城市信息，包含城市名称 city 和城市编码 code
      */
-    onChangeSuccess?: () => void;
+    onChangeSuccess?: (poi: { city: string; code: string | number }) => void;
+    /**
+     * 城市列表面板展开时的回调函数
+     */
+    onOpen?: () => void;
+    /**
+     * 城市列表面板收起时的回调函数
+     */
+    onClose?: () => void;
+    /**
+     * 是否检查地图容器尺寸，容器过小时不展示控件
+     * @default true
+     */
+    canCheckSize?: boolean;
   }
 }

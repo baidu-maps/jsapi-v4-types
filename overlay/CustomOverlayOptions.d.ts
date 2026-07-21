@@ -70,5 +70,15 @@ declare namespace BMap {
      * @default 0
      */
     zIndex?: number;
+    /**
+     * 是否在 map.clearOverlays() 时被清除
+     * @default true
+     */
+    enableMassClear?: boolean;
+    /**
+     * 覆盖物上是否允许拖拽地图
+     * @default false
+     */
+    enableDraggingMap?: boolean;
   }
 }

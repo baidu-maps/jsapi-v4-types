@@ -1,5 +1,10 @@
 declare namespace BMap {
   /**
+   * PointShapeLayer 支持的事件名与事件对象类型映射
+     */
+  type PointShapeLayerEventMap = NormalLayerEventMap<PointShapeLayer>;
+
+  /**
    * PointShapeLayer构造函数options参数
    * @category 配置项
      */
@@ -92,7 +97,7 @@ declare namespace BMap {
     visibility?: boolean | StyleExpress;
     /**
      * 图形类型，取值参考PointShapeLayer.ShapeType枚举
-     * @default 0
+     * @default 2
      */
     shapeType?: number | StyleExpress;
     /**
@@ -121,8 +126,8 @@ declare namespace BMap {
      */
     offset?: [number, number];
     /**
-     * 填充颜色
-     * @default '#0d20c9'
+     * 填充颜色，默认跟随主题色 CSS 变量 --bmap-color-primary-bg
+     * @default '#eaf1ff'
      */
     color?: string | StyleExpress;
     /**
@@ -131,8 +136,8 @@ declare namespace BMap {
      */
     opacity?: number | StyleExpress;
     /**
-     * 描边颜色
-     * @default '#fff'
+     * 描边颜色，默认跟随主题色 CSS 变量 --bmap-color-primary
+     * @default '#1677ff'
      */
     strokeColor?: string | StyleExpress;
     /**
@@ -215,6 +220,11 @@ declare namespace BMap {
      * ```
      */
     constructor(options?: PointShapeLayerOptions);
+    /**
+     * 图层家族标志位，运行时真实存在于原型上，`Map.addLayer()` 依据它分发图层
+     * @hidden
+     */
+    readonly isNormalLayer: true;
 
     /** 锚点位置枚举 */
     static Anchor: {
@@ -426,5 +436,17 @@ declare namespace BMap {
     setMaxZoom(zoom: number): void;
     /** 返回图层最大显示等级 */
     getMaxZoom(): number;
+    /**
+     * 添加事件监听。`dataparsed` 在图层数据解析完成后触发
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    addEventListener<K extends keyof PointShapeLayerEventMap>(event: K, handler: (e: PointShapeLayerEventMap[K]) => void): void;
+    /**
+     * 移除事件监听
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    removeEventListener<K extends keyof PointShapeLayerEventMap>(event: K, handler: (e: PointShapeLayerEventMap[K]) => void): void;
   }
 }

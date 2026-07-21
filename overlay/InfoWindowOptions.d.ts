@@ -37,5 +37,14 @@ declare namespace BMap {
      * @default true
      */
     enableCloseOnClick?: boolean;
+    /**
+     * 信息窗最大化时显示的内容，支持 HTML
+     */
+    maxContent?: string;
+    /**
+     * 是否开启最大化功能
+     * @default false
+     */
+    enableMaximize?: boolean;
   }
 }

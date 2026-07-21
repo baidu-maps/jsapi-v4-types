@@ -4,7 +4,7 @@ declare namespace BMap {
    * anchor属性为整体停靠位置。
    * 控件尺寸为 52px x 88px。
      */
-  class NavigationControl3D {
+  class NavigationControl3D extends Control {
     /**
      * 创建3D导航控件
      * @param opts 可选参数

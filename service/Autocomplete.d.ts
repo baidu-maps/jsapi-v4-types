@@ -69,7 +69,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    constructor(options: AutocompleteOptions);
+    constructor(options?: AutocompleteOptions);
     /**
      * 显示提示列表
      */

@@ -22,8 +22,8 @@ declare namespace BMap {
     /**
      * 对指定的坐标点数组进行坐标转换。
      * @param points 待转换的坐标点数组
-     * @param from 源坐标类型：1=WGS84, 2=WGS84(米制), 3=GCJ02(高德/腾讯), 4=GCJ02(米制), 5=BD09(百度), 6=BD09(米制), 7=图吧, 8=51地图
-     * @param to 目标坐标类型：取值同 from
+     * @param from 源坐标类型，默认为 1：1=WGS84, 2=WGS84(米制), 3=GCJ02(高德/腾讯), 4=GCJ02(米制), 5=BD09(百度), 6=BD09(米制), 7=图吧, 8=51地图
+     * @param to 目标坐标类型，默认为 5：5=BD09(百度经纬度), 6=BD09(米制)
      * @param callback 转换完成的回调函数
      * @example
      * ```typescript
@@ -41,6 +41,6 @@ declare namespace BMap {
      * );
      * ```
      */
-    translate(points: Point[], from: number, to: number, callback: (result: TranslateResults) => void): void;
+    translate(points: Point[], from?: number, to?: number, callback?: (result: TranslateResults) => void): void;
   }
 }

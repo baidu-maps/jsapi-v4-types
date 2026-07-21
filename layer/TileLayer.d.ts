@@ -19,6 +19,11 @@ declare namespace BMap {
      */
     constructor(opts?: TileLayerOptions);
     /**
+     * 图层家族标志位，运行时真实存在于原型上，`Map.addLayer()` 依据它分发图层
+     * @hidden
+     */
+    readonly isTileLayer: true;
+    /**
      * 返回指定图块坐标和缩放级别的瓦片图片URL。
      * 若在 TileLayerOptions 中提供了 tileUrlTemplate 则可不实现此方法
      * @param tileCoord 图块坐标
@@ -58,26 +63,6 @@ declare namespace BMap {
      * 清空图层掩膜
      */
     clearBoundary(): void;
-    /**
-     * 隐藏图层
-     * @example
-     * ```typescript
-     * tileLayer.hide();
-     * ```
-     */
-    hide(): void;
-    /**
-     * 显示图层
-     * @example
-     * ```typescript
-     * tileLayer.show();
-     * ```
-     */
-    show(): void;
-    /**
-     * 返回图层是否可见
-     */
-    isVisible(): boolean;
     /**
      * 清除瓦片缓存并强制重新加载
      * @example

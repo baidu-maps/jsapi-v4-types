@@ -10,8 +10,7 @@ declare namespace BMap {
      */
     anchor?: ControlAnchor;
     /**
-     * 控件基于停靠位置的偏移量
-     * @default new BMap.Size(10, 50)
+     * 控件基于停靠位置的偏移量，默认值为 new BMap.Size(10, 50)
      */
     offset?: Size;
     /**
@@ -48,5 +47,9 @@ declare namespace BMap {
      * @default true
      */
     autoViewport?: boolean;
+    /**
+     * 定位开始前的回调函数，如果返回 false，则不再执行定位操作
+     */
+    onLocationStart?: (onSuccess: Function, onFail: Function) => boolean | void;
   }
 }

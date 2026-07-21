@@ -29,8 +29,7 @@ declare namespace BMap {
      */
     zoomInterval?: number;
     /**
-     * 鹰眼地图和主地图之间的空隙宽度像素值
-     * @default 5
+     * 鹰眼地图和主地图之间的空隙宽度像素值，默认值为 4
      */
     padding?: number;
   }

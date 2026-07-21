@@ -1,8 +1,20 @@
 declare namespace BMap {
   /**
+   * CustomOverlay 支持的事件名与事件对象类型映射
+     */
+  interface CustomOverlayEventMap {
+    /** 点击自定义覆盖物时触发 */
+    click: OverlayMouseEvent<CustomOverlay>;
+    /** 鼠标移入自定义覆盖物时触发 */
+    mouseover: OverlayMouseEvent<CustomOverlay>;
+    /** 鼠标移出自定义覆盖物时触发 */
+    mouseout: OverlayMouseEvent<CustomOverlay>;
+  }
+
+  /**
    * 自定义覆盖物，通过 DOM 元素实现自定义内容展示。
      */
-  class CustomOverlay {
+  class CustomOverlay extends Overlay {
     /**
      * 创建自定义覆盖物
      * @param domCreate DOM 创建函数，返回覆盖物 DOM 元素，函数内可通过 `this` 访问覆盖物实例
@@ -76,5 +88,11 @@ declare namespace BMap {
      * 返回自定义业务属性
      */
     getProperties(): any;
+    /**
+     * 添加事件监听
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    addEventListener<K extends keyof CustomOverlayEventMap>(event: K, handler: (e: CustomOverlayEventMap[K]) => void): void;
   }
 }

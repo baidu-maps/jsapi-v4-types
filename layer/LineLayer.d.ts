@@ -1,5 +1,10 @@
 declare namespace BMap {
   /**
+   * LineLayer 支持的事件名与事件对象类型映射
+     */
+  type LineLayerEventMap = NormalLayerEventMap<LineLayer>;
+
+  /**
    * LineLayer构造函数options参数
    * @category 配置项
      */
@@ -241,6 +246,11 @@ declare namespace BMap {
      */
     constructor(options?: LineLayerOptions);
     /**
+     * 图层家族标志位，运行时真实存在于原型上，`Map.addLayer()` 依据它分发图层
+     * @hidden
+     */
+    readonly isNormalLayer: true;
+    /**
      * 设置数据源为GeoJSON数据对象
      * @param data GeoJSON数据
      * @example
@@ -406,5 +416,17 @@ declare namespace BMap {
     setMaxZoom(zoom: number): void;
     /** 返回图层最大显示等级 */
     getMaxZoom(): number;
+    /**
+     * 添加事件监听。`dataparsed` 在图层数据解析完成后触发
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    addEventListener<K extends keyof LineLayerEventMap>(event: K, handler: (e: LineLayerEventMap[K]) => void): void;
+    /**
+     * 移除事件监听
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    removeEventListener<K extends keyof LineLayerEventMap>(event: K, handler: (e: LineLayerEventMap[K]) => void): void;
   }
 }

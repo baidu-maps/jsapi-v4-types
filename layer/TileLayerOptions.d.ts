@@ -47,5 +47,9 @@ declare namespace BMap {
      * 瓦片缓存数量，移动端默认128，桌面端默认256
      */
     cacheSize?: number;
+    /**
+     * 自定义瓦片加载函数
+     */
+    tileLoadFunction?: (tile: HTMLImageElement, url: string) => void;
   }
 }

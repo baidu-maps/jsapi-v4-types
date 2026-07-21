@@ -1,5 +1,18 @@
 declare namespace BMap {
   /**
+   * DOMLayer 支持的事件名与事件对象类型映射。
+   * 事件由图层内部的 DOM 覆盖物派发
+     */
+  interface DOMLayerEventMap {
+    /** 点击图层内的 DOM 覆盖物时触发 */
+    click: OverlayMouseEvent<CustomOverlay>;
+    /** 鼠标移入图层内的 DOM 覆盖物时触发 */
+    mouseover: OverlayMouseEvent<CustomOverlay>;
+    /** 鼠标移出图层内的 DOM 覆盖物时触发 */
+    mouseout: OverlayMouseEvent<CustomOverlay>;
+  }
+
+  /**
    * 自定义DOM覆盖物图层，用于批量管理自定义DOM覆盖物。
    * 通过 map.addLayer() / map.removeLayer() 方法管理。
      */
@@ -32,6 +45,11 @@ declare namespace BMap {
      * ```
      */
     constructor(createDOM: (properties: object, point: Point) => HTMLElement, opts?: DOMLayerOptions);
+    /**
+     * 图层家族标志位，运行时真实存在于原型上，`Map.addLayer()` 依据它分发图层
+     * @hidden
+     */
+    readonly isCustomHtmlLayer: true;
     /**
      * 设置图层数据，传入GeoJSON格式的FeatureCollection
      * @param data GeoJSON FeatureCollection对象
@@ -74,7 +92,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    addEventListener(event: string, callback: Function): void;
+    addEventListener<K extends keyof DOMLayerEventMap>(event: K, callback: (e: DOMLayerEventMap[K]) => void): void;
     /**
      * 移除图层上所有的覆盖物
      * @example
@@ -115,5 +133,50 @@ declare namespace BMap {
      * ```
      */
     setStyleOptions(options: Partial<DOMLayerOptions>): void;
+  }
+
+  /**
+   * DOMLayer 构造函数配置项
+   * @category 配置项
+     */
+  interface DOMLayerOptions {
+    /**
+     * 最小显示缩放等级
+     * @default 3
+     */
+    minZoom?: number;
+    /**
+     * 最大显示缩放等级
+     * @default 21
+     */
+    maxZoom?: number;
+    /** 图层层叠顺序 */
+    zIndex?: number;
+    /** 水平偏移量，单位像素 */
+    offsetX?: number;
+    /** 垂直偏移量，单位像素 */
+    offsetY?: number;
+    /**
+     * 锚点位置，取值范围[0,1]的数组[水平, 垂直]
+     * @default [0.5, 1]
+     */
+    anchors?: [number, number];
+    /**
+     * 坐标系类型
+     * @default 'BD09'
+     */
+    coordinate?: string;
+    /**
+     * 是否允许拖动地图
+     * @default false
+     */
+    enableDraggingMap?: boolean;
+    /**
+     * 是否可见
+     * @default true
+     */
+    visible?: boolean;
+    /** 初始数据 */
+    data?: object | null;
   }
 }

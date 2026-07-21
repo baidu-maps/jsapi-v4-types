@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 此类表示一个多边形覆盖物。
    */
-  class Polygon {
+  class Polygon extends Overlay {
     /**
      * 创建多边形覆盖物对象
      * @param points 多边形的坐标点数组
@@ -29,7 +29,7 @@ declare namespace BMap {
      * map.addOverlay(polygon);
      * ```
      */
-    constructor(points: Array<Point>, opts?: PolygonOptions);
+    constructor(points: Array<Point> | Array<Array<Point>>, opts?: PolygonOptions);
     /**
      * 设置多边形的坐标点数组
      * @param path 坐标点数组
@@ -43,11 +43,11 @@ declare namespace BMap {
      * ]);
      * ```
      */
-    setPath(path: Array<Point>): void;
+    setPath(path: Array<Point> | Array<Array<Point>>): void;
     /**
-     * 返回多边形的坐标点数组
+     * 返回多边形的坐标点数组。设置过多坐标串（带洞/多环）时返回嵌套的点数组
      */
-    getPath(): Point[];
+    getPath(): Array<Point> | Array<Array<Point>>;
     /**
      * 设置多边形的边线颜色
      * @param color 颜色值，合法的CSS颜色值
@@ -171,7 +171,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof PolygonEventMap>(event: K, handler: (e: PolygonEventMap[K]) => void): void;
     /**
      * 移除事件监听函数
      * @param event 事件名称
@@ -183,6 +183,6 @@ declare namespace BMap {
      * polygon.removeEventListener('click', handler);
      * ```
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof PolygonEventMap>(event: K, handler: (e: PolygonEventMap[K]) => void): void;
   }
 }

@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 此类表示地图上的文本标注。
    */
-  class Label {
+  class Label extends Overlay {
     /**
      * 创建文本标注实例
      * @param content 标注内容，支持HTML
@@ -18,14 +18,14 @@ declare namespace BMap {
      */
     constructor(content: string, opts?: LabelOptions);
     /**
-     * 设置文本标注的CSS样式，样式作用于标注容器元素
-     * @param styles CSS样式对象，属性名使用驼峰命名（如 `backgroundColor`）
+     * 批量设置文本标注容器的 CSS 样式
+     * @param styles CSS 样式键值对
      * @example
      * ```typescript
-     * label.setStyle({ color: 'red', fontSize: '14px', border: '1px solid blue' });
+     * label.setStyles({ color: 'red', fontSize: '14px' });
      * ```
      */
-    setStyle(styles: object): void;
+    setStyles(styles: object): void;
     /**
      * 设置文本标注的内容，支持HTML
      * @param content 标注内容
@@ -35,6 +35,15 @@ declare namespace BMap {
      * ```
      */
     setContent(content: string): void;
+    /**
+     * 返回文本标注的内容
+     */
+    getContent(): string;
+    /**
+     * 设置文本标注的透明度
+     * @param opacity 透明度，取值范围 0 - 1
+     */
+    setOpacity(opacity: number): void;
     /**
      * 设置文本标注的地理坐标，仅当通过 map.addOverlay() 添加时有效
      * @param position 地理坐标
@@ -119,7 +128,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof LabelEventMap>(event: K, handler: (e: LabelEventMap[K]) => void): void;
     /**
      * 移除事件监听函数
      * @param event 事件名称
@@ -131,6 +140,6 @@ declare namespace BMap {
      * label.removeEventListener('click', handler);
      * ```
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof LabelEventMap>(event: K, handler: (e: LabelEventMap[K]) => void): void;
   }
 }

@@ -1,5 +1,30 @@
 declare namespace BMap {
   /**
+   * DistrictLayer 点击事件。事件可能由内部 GeoJSONLayer 或对应的 Polygon 派发
+     */
+  interface DistrictLayerClickEvent extends OverlayMouseEvent<Polygon | GeoJSONLayer> {
+    features?: Overlay[] | null;
+  }
+
+  /**
+   * DistrictLayer 鼠标移出事件。Polygon 的内部命中切换可能只提供基础事件字段
+     */
+  type DistrictLayerMouseOutEvent = GraphMouseOutEvent<Polygon> | GeoJSONLayerMouseOutEvent;
+
+  /**
+   * DistrictLayer 支持的事件名与事件对象类型映射。
+   * 事件由行政区内部的 GeoJSONLayer 和 Polygon 派发
+     */
+  interface DistrictLayerEventMap {
+    /** 点击行政区时触发 */
+    click: DistrictLayerClickEvent;
+    /** 鼠标移入行政区时触发 */
+    mouseover: OverlayMouseEvent<Polygon>;
+    /** 鼠标移出行政区时触发 */
+    mouseout: DistrictLayerMouseOutEvent;
+  }
+
+  /**
    * 行政区图层类，用于在地图上展示行政区划数据。
    * 通过 map.addLayer() / map.removeLayer() 方法管理。
      */
@@ -55,7 +80,9 @@ declare namespace BMap {
      *   e.currentTarget.setFillColor('#9169db');
      * });
      * districtLayer.addEventListener('mouseout', (e) => {
-     *   e.currentTarget.setFillColor('#5e8bff');
+     *   if (e.currentTarget instanceof BMap.Polygon) {
+     *     e.currentTarget.setFillColor('#5e8bff');
+     *   }
      * });
      * ```
      * @example 使用adcode指定行政区（优先级高于name）
@@ -67,38 +94,14 @@ declare namespace BMap {
      * });
      * map.addLayer(districtLayer);
      * ```
-     */
+    */
     constructor(options?: DistrictLayerOptions);
+    /**
+     * 图层家族标志位，运行时真实存在于原型上，`Map.addLayer()` 依据它分发图层
+     * @hidden
+     */
+    readonly isDistrictLayer: true;
 
-    /**
-     * 隐藏图层
-     * @example
-     * ```typescript
-     * districtLayer.hide();
-     * ```
-     */
-    hide(): void;
-    /**
-     * 显示图层
-     * @example
-     * ```typescript
-     * districtLayer.show();
-     * ```
-     */
-    show(): void;
-    /**
-     * 返回图层是否可见
-     */
-    isVisible(): boolean;
-    /**
-     * 设置图层层级
-     * @param zIndex 层级值
-     * @example
-     * ```typescript
-     * districtLayer.setZIndex(5);
-     * ```
-     */
-    setZIndex(zIndex: number): void;
     /**
      * 添加事件监听
      * @param event 事件类型
@@ -106,23 +109,20 @@ declare namespace BMap {
      * @example
      * ```typescript
      * districtLayer.addEventListener('click', (e) => {
-     *   console.log('行政区点击', e);
+     *   console.log('行政区点击', e.latLng);
+     *   if (e.currentTarget instanceof BMap.Polygon) {
+     *     e.currentTarget.setFillColor('#9169db');
+     *   }
      * });
      * ```
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof DistrictLayerEventMap>(event: K, handler: (e: DistrictLayerEventMap[K]) => void): void;
     /**
      * 移除事件监听
      * @param event 事件类型
      * @param handler 回调函数
-     * @example
-     * ```typescript
-     * const handler = (e: any) => { console.log(e); };
-     * districtLayer.addEventListener('click', handler);
-     * districtLayer.removeEventListener('click', handler);
-     * ```
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof DistrictLayerEventMap>(event: K, handler: (e: DistrictLayerEventMap[K]) => void): void;
   }
 
   /**

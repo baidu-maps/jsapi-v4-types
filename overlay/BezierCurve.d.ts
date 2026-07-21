@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 此类表示一个二阶贝塞尔曲线覆盖物。
      */
-  class BezierCurve {
+  class BezierCurve extends Overlay {
     /**
      * 创建二阶贝塞尔曲线覆盖物
      * @param points 曲线路径点数组
@@ -18,7 +18,7 @@ declare namespace BMap {
      * map.addOverlay(bezierCurve);
      * ```
      */
-    constructor(points: Array<Point>, controlPoints: Array<Point>, opts?: BezierCurveOptions);
+    constructor(points: Array<Point>, controlPoints: Array<Array<Point>>, opts?: BezierCurveOptions);
     /**
      * 设置曲线的路径点数组
      * @param path 路径点数组
@@ -43,11 +43,11 @@ declare namespace BMap {
      * bezierCurve.setControlPoints([new BMap.Point(116.410, 39.940)]);
      * ```
      */
-    setControlPoints(path: Array<Point>): void;
+    setControlPoints(path: Array<Array<Point>>): void;
     /**
      * 返回曲线的控制点数组
      */
-    getControlPoints(): Point[];
+    getControlPoints(): Array<Array<Point>>;
     /**
      * 设置曲线颜色
      * @param color 颜色值，格式为 '#xxxxxx'
@@ -127,7 +127,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof BezierCurveEventMap>(event: K, handler: (e: BezierCurveEventMap[K]) => void): void;
     /**
      * 移除事件监听函数
      * @param event 事件名称
@@ -139,6 +139,6 @@ declare namespace BMap {
      * bezierCurve.removeEventListener('click', handler);
      * ```
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof BezierCurveEventMap>(event: K, handler: (e: BezierCurveEventMap[K]) => void): void;
   }
 }

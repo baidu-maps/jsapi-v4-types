@@ -60,5 +60,13 @@ declare namespace BMap {
      * 返回城市列表（当检索词在多个城市有结果时）
      */
     getCityList(): Array<{ city: string; numResults: number }>;
+    /**
+     * 返回检索结果的中心点坐标（按当前全局 coordType 转换）
+     */
+    getCenter(): Point;
+    /**
+     * 返回检索结果的地理范围（按当前全局 coordType 转换）
+     */
+    getBounds(): Bounds;
   }
 }

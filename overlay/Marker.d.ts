@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 此类表示地图上的一个图像标注。
    */
-  class Marker {
+  class Marker extends Overlay {
     /**
      * 创建一个图像标注实例
      * @param point 标注所在的地理位置
@@ -146,6 +146,19 @@ declare namespace BMap {
      */
     getMap(): Map;
     /**
+     * 设置标注的锚点位置，会覆盖 Icon 自身的 anchor 设置
+     * @param anchor 锚点枚举值
+     * @example
+     * ```typescript
+     * marker.setAnchor(BMAP_ANCHOR_BOTTOM_CENTER);
+     * ```
+     */
+    setAnchor(anchor: ControlAnchor): void;
+    /**
+     * 返回标注的锚点位置
+     */
+    getAnchor(): ControlAnchor;
+    /**
      * 设置标注的旋转角度
      * @param rotation 旋转角度，单位度
      * @example
@@ -162,26 +175,33 @@ declare namespace BMap {
      * 添加事件监听函数
      * @param event 事件名称
      * @param handler 事件处理函数
-     * @example
+     * @example点击标注
      * ```typescript
      * marker.addEventListener('click', (e) => {
-     *   console.log('marker clicked', e);
+     *   console.log(e.type, e.target, e.pixel, e.latLng);
+     * });
+     * ```
+     * @example 拖拽标注
+     * ```typescript
+     * marker.enableDragging();
+     * marker.addEventListener('dragend', (e) => {
+     *   console.log('拖拽结束', e.pixel);
      * });
      * ```
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof MarkerEventMap>(event: K, handler: (e: MarkerEventMap[K]) => void): void;
     /**
      * 移除事件监听函数
      * @param event 事件名称
      * @param handler 事件处理函数
      * @example
      * ```typescript
-     * const handler = (e: any) => { console.log(e); };
+     * const handler = (e: BMap.OverlayMouseEvent<BMap.Marker>) => { console.log(e); };
      * marker.addEventListener('click', handler);
      * marker.removeEventListener('click', handler);
      * ```
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof MarkerEventMap>(event: K, handler: (e: MarkerEventMap[K]) => void): void;
     /**
      * 打开地点详情窗口
      * @param placeDetail PlaceDetail 实例

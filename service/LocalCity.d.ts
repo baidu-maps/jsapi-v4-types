@@ -13,7 +13,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    constructor(opts: LocalCityOptions);
+    constructor(opts?: LocalCityOptions);
     /**
      * 当获取城市信息后，回调函数会被调用，其参数为类型为LocalCityResult对象
      * @example

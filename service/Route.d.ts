@@ -24,7 +24,7 @@ declare namespace BMap {
      * const distanceNum = route.getDistance(false); // 5200
      * ```
      */
-    getDistance(format: boolean): string | number;
+    getDistance(format?: boolean): string | number;
     /**
      * 返回本路线在方案中的索引位置
      */

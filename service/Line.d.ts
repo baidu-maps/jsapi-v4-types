@@ -31,7 +31,7 @@ declare namespace BMap {
      * const distanceNum = line.getDistance(false); // 3500
      * ```
      */
-    getDistance(format: boolean): string | number;
+    getDistance(format?: boolean): string | number;
     /**
      * 线路全称
      */

@@ -1,5 +1,54 @@
 declare namespace BMap {
   /**
+   * MVTLayer 事件基础类型
+     */
+  interface MVTLayerBaseEvent {
+    type: string;
+    target: MVTLayer;
+    currentTarget: MVTLayer;
+  }
+
+  /**
+   * MVTLayer 鼠标事件
+     */
+  interface MVTLayerMouseEvent extends MVTLayerBaseEvent {
+    pixel: Pixel;
+    latLng: Point;
+  }
+
+  /**
+   * MVTLayer 要素拾取事件。图层正在执行上一次拾取时，`value` 可能为空
+     */
+  interface MVTLayerPickEvent extends MVTLayerMouseEvent {
+    value: Entity[] | undefined;
+  }
+
+  /**
+   * MVTLayer 鼠标移动事件。仅在至少命中一个要素时派发
+     */
+  interface MVTLayerMouseMoveEvent extends MVTLayerMouseEvent {
+    value: Entity[];
+  }
+
+  /**
+   * MVTLayer 支持的事件名与事件对象类型映射
+     */
+  interface MVTLayerEventMap {
+    /** 点击图层要素时触发 */
+    click: MVTLayerPickEvent;
+    /** 双击图层要素时触发 */
+    dblclick: MVTLayerPickEvent;
+    /** 鼠标在图层要素上移动时触发，`value` 为命中的要素 */
+    mousemove: MVTLayerMouseMoveEvent;
+    /** 鼠标移出图层要素时触发 */
+    mouseout: MVTLayerMouseEvent;
+    /** 瓦片开始加载时触发 */
+    tilesloadstart: MVTLayerBaseEvent;
+    /** 瓦片加载完成时触发 */
+    tilesloadend: MVTLayerBaseEvent;
+  }
+
+  /**
    * MVT矢量瓦片图层，用于添加MVT标准图层
      */
   class MVTLayer {
@@ -53,6 +102,18 @@ declare namespace BMap {
      * ```
      */
     setStyle(style: MVTLayerStyle): void;
+    /**
+     * 添加事件监听
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    addEventListener<K extends keyof MVTLayerEventMap>(event: K, handler: (e: MVTLayerEventMap[K]) => void): void;
+    /**
+     * 移除事件监听
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    removeEventListener<K extends keyof MVTLayerEventMap>(event: K, handler: (e: MVTLayerEventMap[K]) => void): void;
   }
 
   /**
@@ -85,13 +146,13 @@ declare namespace BMap {
     /** 图层样式 */
     style?: MVTLayerStyle;
     /** 点击回调 */
-    onclick?: (e: { value: Array<object> }) => void;
+    onclick?: (e: MVTLayerPickEvent) => void;
     /** 双击回调 */
-    ondblclick?: (e: { value: Array<object> }) => void;
+    ondblclick?: (e: MVTLayerPickEvent) => void;
     /** 鼠标移入回调 */
-    onmousemove?: (e: { value: Array<object> }) => void;
+    onmousemove?: (e: MVTLayerMouseMoveEvent) => void;
     /** 鼠标移出回调 */
-    onmouseout?: (e: { value: Array<object> }) => void;
+    onmouseout?: (e: MVTLayerMouseEvent) => void;
   }
 
   /**

@@ -8,7 +8,7 @@ declare namespace BMap {
    * 按钮在上时，列表向上展开；按钮在下时，列表向下展开。
    * 按钮在左时，列表与按钮左对齐，按钮在右时，列表右对齐。
    */
-  class CityListControl {
+  class CityListControl extends Control {
     /**
      * 创建城市选择控件实例
      * @param opts 可选配置参数
