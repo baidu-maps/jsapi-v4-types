@@ -9,7 +9,7 @@ declare namespace BMap {
      * @param content 标签的文本内容
      * @param opts 包含标签经纬度坐标和高度的配置项
      */
-    constructor(content: string, opts?: PanoramaLabelOptions);
+    constructor(content: string, opts: PanoramaLabelOptions);
     /**
      * 设置标签的经纬度坐标
      * @param position 经纬度坐标
@@ -54,12 +54,12 @@ declare namespace BMap {
      * @param event 事件名称
      * @param handler 事件处理函数
      */
-    addEventListener(event: string, handler: Function): void;
+    addEventListener<K extends keyof PanoramaLabelEventMap>(event: K, handler: (e: PanoramaLabelEventMap[K]) => void): void;
     /**
      * 移除事件监听
      * @param event 事件名称
      * @param handler 事件处理函数
      */
-    removeEventListener(event: string, handler: Function): void;
+    removeEventListener<K extends keyof PanoramaLabelEventMap>(event: K, handler: (e: PanoramaLabelEventMap[K]) => void): void;
   }
 }

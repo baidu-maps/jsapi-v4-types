@@ -23,6 +23,6 @@ declare namespace BMap {
      * });
      * ```
      */
-    get(callback: Function): void;
+    get(callback: (result: LocalCityResult) => void): void;
   }
 }

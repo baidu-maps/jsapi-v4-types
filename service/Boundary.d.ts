@@ -1,5 +1,15 @@
 declare namespace BMap {
   /**
+   * 行政区域边界查询结果
+   */
+  interface BoundaryResult {
+    /**
+     * 行政区域的边界数组，每个元素是一个坐标点串字符串，格式为 "lng1,lat1;lng2,lat2;lng3,lat3;..."
+     */
+    boundaries: string[];
+  }
+
+  /**
    * 此类表示一个行政区域的边界。
    */
   class Boundary {
@@ -20,6 +30,12 @@ declare namespace BMap {
      * });
      * ```
      */
-    get(name: string, callback: Function): void;
+    get(name: string, callback: (result: BoundaryResult | null) => void): void;
+    /**
+     * 解析混淆后的百度坐标字符串
+     * @param str - 混淆后的百度坐标字符串
+     * @param callback - 解析完成后的回调函数，返回 BoundaryResult
+     */
+    parsebdStr(str: string, callback: (result: BoundaryResult | null) => void): void;
   }
 }

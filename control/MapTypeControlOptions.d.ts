@@ -15,19 +15,12 @@ declare namespace BMap {
      */
     offset?: Size;
     /**
-     * 控件样式
-     * @default BMAP_MAPTYPE_CONTROL_MAP
+     * 控件样式，默认值为 `BMAP_MAPTYPE_CONTROL_MAP`
      */
     type?: MapTypeControlType;
     /**
-     * 控件展示的地图类型列表
-     * @default [BMAP_NORMAL_MAP, BMAP_EARTH_MAP, BMAP_HYBRID_MAP]
+     * 控件展示的地图类型列表，默认值为 `[BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]`
      */
     mapTypes?: MapType[];
-    /**
-     * 是否启用切换功能
-     * @default true
-     */
-    enableSwitch?: boolean;
   }
 }

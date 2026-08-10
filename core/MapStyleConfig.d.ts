@@ -6,9 +6,11 @@ declare namespace BMap {
   interface MapStyleConfig {
     /**
      * 通过个性化编辑器发布的styleId
-     * */
+     */
     styleId?: string;
-    /** 通过个性化编辑器发布的样式json */
+    /**
+     * 通过个性化编辑器发布的样式json 
+     */
     styleJson?: object[];
     /**
      * @default false

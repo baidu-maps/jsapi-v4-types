@@ -8,7 +8,7 @@ declare namespace BMap {
      */
     center?: Point;
     /**
-     * 展示当前城市的最佳地图级别，如果您在使用此对象时提供了map实例，则地图级别将根据您提供的地图大小进行调整
+     * 如果初始化时传入了 renderOptions.map 则返回当前地图层级，否则为5(即全国视野层级)
      */
     level?: number;
     /**

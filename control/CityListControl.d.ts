@@ -1,12 +1,10 @@
 declare namespace BMap {
   /**
-   * 地图城市选择控件。
+   * 地图城市选择控件。 默认按钮宽度随城市名称变化，高度为 32px；展开后的展开城市面板尺寸为 400px × 455px
    * 提供全国的省份、城市选择列表，可方便用户切换地图显示省份、城市。
-   * 控件按钮尺寸为 84px x 32px。
-   * 控件展开后城市列表尺寸为 400px x 640px。
-   * anchor属性为按钮停靠位置。
-   * 按钮在上时，列表向上展开；按钮在下时，列表向下展开。
-   * 按钮在左时，列表与按钮左对齐，按钮在右时，列表右对齐。
+   * `anchor` 属性表示按钮的停靠位置。
+   * 顶部停靠时列表向下展开，底部停靠时列表向上展开。
+   * 按钮停靠在左侧时，列表与按钮左对齐；停靠在右侧时，列表与按钮右对齐。
    */
   class CityListControl extends Control {
     /**
@@ -27,5 +25,25 @@ declare namespace BMap {
      * ```
      */
     constructor(opts?: CityListControlOptions);
+    /**
+     * 展开城市列表面板
+     */
+    open(): void;
+    /**
+     * 收起城市列表面板
+     */
+    close(): void;
+    /**
+     * 切换城市列表面板的展开状态
+     */
+    toggle(): void;
+    /**
+     * 返回城市列表的触发元素；控件尚未初始化时返回 undefined
+     */
+    getTriggerDom(): HTMLElement | undefined;
+    /**
+     * 返回当前城市名称
+     */
+    getCityName(): string;
   }
 }

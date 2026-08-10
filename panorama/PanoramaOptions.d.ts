@@ -17,7 +17,7 @@ declare namespace BMap {
     linksControl?: boolean;
     /**
      * 是否显示全景室内场景的切换控件，仅对室内景生效
-     * @default false
+     * @default true
      */
     indoorSceneSwitchControl?: boolean;
     /**

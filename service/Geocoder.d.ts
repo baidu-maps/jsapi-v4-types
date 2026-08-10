@@ -48,6 +48,6 @@ declare namespace BMap {
      * });
      * ```
      */
-    getLocation(point: Point, callback: Function, options?: LocationOptions): void;
+    getLocation(point: Point, callback: (result: GeocoderResult | null) => void, options?: LocationOptions): void;
   }
 }

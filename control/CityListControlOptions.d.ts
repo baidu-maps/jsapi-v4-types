@@ -1,4 +1,20 @@
 declare namespace BMap {
+  /** 城市切换成功后的城市信息 */
+  interface CityListControlChangeResult {
+    /** 城市名称 */
+    city: string;
+    /** 城市编码 */
+    code: string | number;
+    /** 城市名称，仅切换城市成功时提供 */
+    title?: string;
+    /** 城市数据标识，仅切换城市成功时提供 */
+    uid?: string;
+    /** 城市坐标，仅切换城市成功时提供 */
+    point?: Point | '';
+    /** 地图级别，仅切换城市成功时提供 */
+    level?: number;
+  }
+
   /**
    * CityListControl 构造函数的可选参数。它没有构造函数，但可通过对象字面量形式表示。
    * @category 配置项
@@ -40,9 +56,9 @@ declare namespace BMap {
     onChangeAfter?: () => void;
     /**
      * 切换城市成功后触发的回调函数，控件初始化完成后也会触发一次，可在回调中获取当前城市名
-     * @param poi 城市信息，包含城市名称 city 和城市编码 code
+     * @param poi 城市信息
      */
-    onChangeSuccess?: (poi: { city: string; code: string | number }) => void;
+    onChangeSuccess?: (poi: CityListControlChangeResult) => void;
     /**
      * 城市列表面板展开时的回调函数
      */

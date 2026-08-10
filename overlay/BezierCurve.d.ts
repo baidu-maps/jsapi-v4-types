@@ -1,12 +1,12 @@
 declare namespace BMap {
   /**
-   * 此类表示一个二阶贝塞尔曲线覆盖物。
+   * 此类表示一个三次贝塞尔曲线覆盖物。
      */
   class BezierCurve extends Overlay {
     /**
-     * 创建二阶贝塞尔曲线覆盖物
-     * @param points 曲线路径点数组
-     * @param controlPoints 控制点数组，每两个路径点之间可有1或2个控制点，格式如 `[[cp1, cp2], [cp3]]`
+     * 创建三次贝塞尔曲线覆盖物
+     * @param points 曲线路径点数组，至少包含两个点
+     * @param controlPoints 控制点数组，每两个路径点之间对应一组1或2个控制点，组数应为 `points.length - 1`，格式如 `[[cp1, cp2], [cp3]]`
      * @param opts 可选参数
      * @example
      * ```typescript
@@ -37,13 +37,13 @@ declare namespace BMap {
     getPath(): Point[];
     /**
      * 设置曲线的控制点数组，每两个路径点之间可有1或2个控制点
-     * @param path 控制点数组
+     * @param controlPoints 控制点数组，组数应为当前路径点数量减1
      * @example
      * ```typescript
-     * bezierCurve.setControlPoints([new BMap.Point(116.410, 39.940)]);
+     * bezierCurve.setControlPoints([[new BMap.Point(116.410, 39.940)]]);
      * ```
      */
-    setControlPoints(path: Array<Array<Point>>): void;
+    setControlPoints(controlPoints: Array<Array<Point>>): void;
     /**
      * 返回曲线的控制点数组
      */
@@ -89,21 +89,27 @@ declare namespace BMap {
     getStrokeWeight(): number;
     /**
      * 设置曲线样式
-     * @param style 线样式，`'solid'` 实线或 `'dashed'` 虚线
+     * @param style 线样式
      * @example
      * ```typescript
      * bezierCurve.setStrokeStyle('dashed');
      * ```
      */
-    setStrokeStyle(style: string): void;
+    setStrokeStyle(style: 'solid' | 'dashed' | 'dotted'): void;
     /**
      * 返回曲线样式
      */
-    getStrokeStyle(): string;
+    getStrokeStyle(): 'solid' | 'dashed' | 'dotted';
     /**
      * 返回覆盖物的地理区域范围
+     * @param normalize 跨越世界边界时，是否将经度范围扩展为完整世界；默认为 false，保留跨 180° 经线的紧凑范围，传 true 时返回 [-180°, 180°] 的整世界范围。
      */
-    getBounds(): Bounds;
+    getBounds(normalize?: boolean): Bounds;
+    /**
+     * 设置覆盖物的 zIndex
+     * @param zIndex 层叠顺序值
+     */
+    setZIndex(zIndex: number): void;
     /**
      * 允许覆盖物在 map.clearOverlays() 方法中被清除
      */

@@ -46,6 +46,14 @@ declare namespace BMap {
      */
     disableScrollWheelZoom(): void;
     /**
+     * 开启底图可点功能
+     */
+    enableMapClick(): void;
+    /**
+     * 关闭底图可点功能
+     */
+    disableMapClick(): void;
+    /**
      * 开启双击平滑缩放效果
      */
     enableContinuousZoom(): void;
@@ -110,14 +118,6 @@ declare namespace BMap {
      */
     disableTilt(): void;
     /**
-     * 启用手势倾斜地图
-     */
-    enableTiltGestures(): void;
-    /**
-     * 禁用手势倾斜地图
-     */
-    disableTiltGestures(): void;
-    /**
      * 设置地图旋转角度。传入任意角度值均可，内部会自动按一周（360 度）归一化，例如传入 450 等价于 90，传入 -90 等价于 270。
      * @param heading 旋转角度，单位为度。推荐使用 0~360 的罗盘角度（正北 0、正东 90、正南 180、正西 270），超出该范围会被自动归一化
      * @param options 可选配置参数
@@ -137,6 +137,20 @@ declare namespace BMap {
      * 注意：返回值与 `setHeading` 的入参不保证数值一致，例如 `setHeading(270)` 后 `getHeading()` 返回 -90。
      */
     getHeading(): number;
+    /**
+     * 将地图重置为正北方向，重置过程的动画不可被打断
+     * @param options 可选配置参数
+     * @example
+     * ```typescript
+     * map.resetHeading();
+     * ```
+     */
+    resetHeading(options?: {
+      /** 是否关闭动画 */
+      noAnimation?: boolean;
+      /** 动画结束后的回调函数 */
+      callback?: () => void;
+    }): void;
     /**
      * 设置地图的倾斜角度
      * @param tilt 倾斜角度，单位为度，取值范围 0~73
@@ -199,7 +213,7 @@ declare namespace BMap {
     /**
      * 返回当前地图级别，一个像素对应多少单位的平面墨卡托坐标
      */
-    getZoomUnits(): number;
+    getZoomUnits(level?: number): number;
     /**
      * 返回地图的DOM容器元素。当创建用户自定义控件时，需要自行实现Control.initialize()方法，并将控件的容器元素添加到地图上，通过此方法可获得地图容器
      */
@@ -303,7 +317,7 @@ declare namespace BMap {
      * ]);
      * ```
      */
-    addMapLabels(labels: MapLabel[]): string[];
+    addMapLabels(labels: MapLabel | MapLabel[]): string[];
     /**
      * 从底图上移除文字标注，参数为uid数组，根据数组里的uid进行移除
      * @param labelUids 要移除的标注uid数组
@@ -312,7 +326,15 @@ declare namespace BMap {
      * map.removeMapLabels(['uid-001', 'uid-002']);
      * ```
      */
-    removeMapLabels(labelUids: string[]): void;
+    removeMapLabels(labelUids: string | string[]): void;
+    /**
+     * 开启点击底图标注后自动展示信息窗口，同时会开启底图标注点击
+     */
+    enableIconInfoWindow(): void;
+    /**
+     * 关闭点击底图标注后自动展示信息窗口
+     */
+    disableIconInfoWindow(): void;
     /**
      * 设置地图可拖动区域，参数为地图拖拽的区域范围
      * @param bounds 允许拖动的地理范围
@@ -353,7 +375,7 @@ declare namespace BMap {
      * map.enablePreferredLanguage(BMAP_LANGUAGE_EN);
      * ```
      */
-    enablePreferredLanguage(language: Language): void;
+    enablePreferredLanguage(language?: Language): void;
     /**
      * 禁用首选语言
      */
@@ -425,11 +447,11 @@ declare namespace BMap {
      */
     getDistance(start: Point, end: Point): number;
     /**
-     * 返回地图类型
+     * 返回当前地图类型实例，与全局常量 `BMAP_NORMAL_MAP` 等同源
      */
-    getMapType(): MapTypeId;
+    getMapType(): MapType;
     /**
-     * 根据提供的地理区域或坐标设置地图视野，调整后的视野会保证包含提供的地理区域或坐标
+     * 根据提供的地理区域或坐标设置地图视野，调整后的视野会保证包含提供的地理区域或坐标，除坐标数组与视野对象外，还支持传入带 getBounds 方法的覆盖物数组
      * @param view 地理坐标数组或视野对象
      * @param viewportOptions 视野调整选项
      * @example
@@ -453,7 +475,10 @@ declare namespace BMap {
      * );
      * ```
      */
-    setViewport(view: Array<Point> | Viewport, viewportOptions?: ViewportOptions): void;
+    setViewport(
+      view: Array<Point> | Array<{ getBounds(): Bounds }> | Viewport,
+      viewportOptions?: ViewportOptions
+    ): void;
     /**
      * 根据提供的地理区域或坐标获得最佳的地图视野，返回的对象中包含center和zoom属性，分别表示地图的中心点和级别。此方法仅返回视野信息，不会将新的中心点和级别做用到当前地图上
      * @param view 地理坐标数组
@@ -490,13 +515,13 @@ declare namespace BMap {
      * ```typescript
      * map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
      * ```
-     * @example启用动画
+     * @example 启用动画
      * ```typescript
      * map.centerAndZoom(new BMap.Point(116.404, 39.915), 15, {
      *   noAnimation: false
      * });
      * ```
-     * @example设置动画完成后的回调
+     * @example 设置动画完成后的回调
      * ```typescript
      * map.centerAndZoom(new BMap.Point(116.404, 39.915), 15, {
      *   noAnimation: false,
@@ -544,19 +569,19 @@ declare namespace BMap {
      * ```typescript
      * map.panTo(new BMap.Point(116.404, 39.915));
      * ```
-     * @example禁用动画
+     * @example 禁用动画
      * ```typescript
      * map.panTo(new BMap.Point(116.404, 39.915), {
      *   noAnimation: true
      * });
      * ```
-     * @example设置动画持续时间
+     * @example 设置动画持续时间
      * ```typescript
      * map.panTo(new BMap.Point(116.404, 39.915), {
      *   duration: 800
      * });
      * ```
-     * @example设置动画完成后的回调
+     * @example 设置动画完成后的回调
      * ```typescript
      * map.panTo(new BMap.Point(116.404, 39.915), {
      *   callback: () => console.log('移动完成')
@@ -647,13 +672,13 @@ declare namespace BMap {
     getCenter(): Point;
     /**
      * 设置地图类型
-     * @param mapTypeId 地图类型常量
+     * @param mapType 地图类型常量，如 `BMAP_SATELLITE_MAP`
      * @example
      * ```typescript
      * map.setMapType(BMAP_SATELLITE_MAP);
      * ```
      */
-    setMapType(mapTypeId: MapTypeId): void;
+    setMapType(mapType: MapType): void;
     /**
      * 将视图切换到指定的缩放等级，中心点坐标不变。注意：当有信息窗口在地图上打开时，地图缩放将保证信息窗口所在的坐标位置不动。
      * @param zoom 目标缩放级别
@@ -803,10 +828,6 @@ declare namespace BMap {
      */
     getOverlays(): Overlay[];
     /**
-     * 返回地图覆盖物容器列表
-     */
-    getPanes(): MapPanes;
-    /**
      * 获取当前地图允许的最大倾斜角度
      */
     getCurrentMaxTilt(): number;
@@ -827,9 +848,9 @@ declare namespace BMap {
      * ```typescript
      * map.setMapStyle({ styleId: 'your-style-id' });
      * ```
-     * @example 使用 styleId，并启用 v3 样式（支持室内图）
+     * @example 使用 styleId，并开启 merge 参数支持室内图
      * ```typescript
-     * map.setMapStyle({ styleId: 'your-style-id', version: 'v3' });
+     * map.setMapStyle({ styleId: 'your-style-id', merge: true });
      * ```
      * @example 使用 styleJson 内联样式（通过个性化编辑器导出的 JSON）
      * ```typescript
@@ -848,11 +869,52 @@ declare namespace BMap {
      */
     setMapStyle(config: MapStyleConfig): void;
     /**
-     * @deprecated 请使用 {@link setMapStyle}
-     */
-    setMapStyleV2(config: MapStyleConfig): void;
-    /**
      * 设置地图 UI 主题。主题通过 CSS 变量控制 UI 控件、服务面板等的配色
+     *
+     * 支持的主题变量如下，变量名需与表中名称完全一致。
+     * 未被 dark 主题覆盖的变量继续使用 light 的默认值。
+     *
+     * | 变量 | light 默认值 | dark 默认值 | 用途 |
+     * | --- | --- | --- | --- |
+     * | `--bmap-border-radius` | `6px` | 同 light | 基础圆角 |
+     * | `--bmap-border-radius-lg` | `16px` | 同 light | 大圆角 |
+     * | `--bmap-box-shadow` | `0 6px 16px 0 rgba(0, 0, 0, .08), 0 3px 6px -4px rgba(0, 0, 0, .12), 0 9px 28px 8px rgba(0, 0, 0, .05)` | `0 6px 16px 0 rgba(0,0,0,.45), 0 3px 6px -4px rgba(0,0,0,.55), 0 9px 28px 8px rgba(0,0,0,.35)` | 通用浮层阴影 |
+     * | `--bmap-color-bg-base` | `#fff` | `#2b2d33` | 基础背景色 |
+     * | `--bmap-color-bg-base-hover` | `rgba(0, 0, 0, .02)` | `rgba(255, 255, 255, .08)` | 基础背景悬停色 |
+     * | `--bmap-color-bg-base-active` | `rgba(51, 136, 255, .06)` | `rgba(74, 144, 255, .18)` | 基础背景激活色 |
+     * | `--bmap-color-primary` | `#1677ff` | `#5ba3ff` | 主题主色 |
+     * | `--bmap-color-primary-bg` | `#eaf1ff` | `#1e2a40` | 主色浅背景 |
+     * | `--bmap-color-primary-bg-hover` | `#dde8fc` | `#243450` | 主色浅背景悬停色 |
+     * | `--bmap-color-text-base` | `#000` | `#e0e0e0` | 基础文本色 |
+     * | `--bmap-color-text-weak` | `#5c6373` | `#b0b0c0` | 弱化文本色 |
+     * | `--bmap-color-text-active` | `#1677ff` | `#5ba3ff` | 激活文本色 |
+     * | `--bmap-color-text-secondary` | `#5a6070` | `#b0b0c0` | 次要文本色 |
+     * | `--bmap-color-text-tertiary` | `#8a90a0` | `#9a9ab0` | 三级文本色 |
+     * | `--bmap-color-border` | `#d9d9d9` | `#3a3d44` | 基础边框色 |
+     * | `--bmap-color-border-secondary` | `#f0f0f0` | `#3a3d44` | 次级边框和分割线颜色 |
+     * | `--bmap-color-fill` | `#f2f3f5` | `rgba(255, 255, 255, .08)` | 通用次级填充色 |
+     * | `--bmap-font-size` | `14px` | 同 light | 基础字号 |
+     * | `--bmap-font-size-xs` | `12px` | 同 light | 小字号 |
+     * | `--bmap-font-size-lg` | `16px` | 同 light | 大字号 |
+     * | `--bmap-font-size-heading-1` | `38px` | 同 light | 一级标题字号 |
+     * | `--bmap-font-size-heading-2` | `30px` | 同 light | 二级标题字号 |
+     * | `--bmap-font-size-heading-3` | `24px` | 同 light | 三级标题字号 |
+     * | `--bmap-font-size-heading-4` | `20px` | 同 light | 四级标题字号 |
+     * | `--bmap-font-size-heading-5` | `16px` | 同 light | 五级标题字号 |
+     * | `--bmap-font-weight-bold` | `500` | 同 light | 基础强调字重 |
+     * | `--bmap-font-weight-bold-lg` | `700` | 同 light | 高强调字重 |
+     * | `--bmap-font-weight-lighter` | `400` | 同 light | 常规字重 |
+     * | `--bmap-line-height` | `1.2` | 同 light | 基础行高 |
+     * | `--bmap-line-width` | `1px` | 同 light | 基础线宽 |
+     * | `--bmap-line-type` | `solid` | 同 light | 基础线型 |
+     * | `--bmap-margin` | `16px` | 同 light | 基础外边距 |
+     * | `--bmap-margin-lg` | `24px` | 同 light | 大外边距 |
+     * | `--bmap-margin-xs` | `8px` | 同 light | 小外边距 |
+     * | `--bmap-margin-xxs` | `4px` | 同 light | 超小外边距 |
+     * | `--bmap-padding` | `16px` | 同 light | 基础内边距 |
+     * | `--bmap-padding-lg` | `24px` | 同 light | 大内边距 |
+     * | `--bmap-padding-xs` | `8px` | 同 light | 小内边距 |
+     * | `--bmap-padding-xxs` | `4px` | 同 light | 超小内边距 |
      * @param theme 主题名称，内置 'light' 和 'dark'
      * @param customVars 可选的 CSS 变量覆盖对象，未指定的变量回退到主题默认值
      * @example
@@ -865,6 +927,21 @@ declare namespace BMap {
      * ```
      */
     setTheme(theme: 'light' | 'dark' | string, customVars?: Record<string, string>): void;
+    /**
+     * 获取当前地图 UI 主题名称，未设置时返回 'light'
+     */
+    getTheme(): string;
+    /**
+     * 注册自定义 UI 主题，注册后可通过 `setTheme(name)` 切换
+     * @param name 主题名称
+     * @param variables 主题的 CSS 变量集合，支持的变量见 `setTheme` 的变量表
+     * @example
+     * ```typescript
+     * map.registerTheme('ocean', { '--bmap-color-primary': '#0080ff' });
+     * map.setTheme('ocean');
+     * ```
+     */
+    registerTheme(name: string, variables: Record<string, string>): void;
     /**
      * 启动视角动画
      * @param viewAnimation 视角动画实例
@@ -886,7 +963,7 @@ declare namespace BMap {
      * map.startViewAnimation(viewAnimation);
      * ```
      */
-    startViewAnimation(viewAnimation: ViewAnimation): number;
+    startViewAnimation(viewAnimation: ViewAnimation): void;
     /**
      * 暂停视角动画
      * @param viewAnimation 要暂停的视角动画实例
@@ -1035,241 +1112,150 @@ declare namespace BMap {
      * 添加事件监听
      * @param event 事件名称
      * @param handler 事件处理函数
-     * @example click 点击
+     * @example 地图初始化事件
+     * ```typescript
+     * map.addEventListener('load', (e) => {
+     *   console.log(e.type, e.target, e.zoom);
+     * });
+     * ```
+     * @example 鼠标点击事件
      * ```typescript
      * map.addEventListener('click', (e) => {
-     *   console.log('click 事件触发', e);
      *   console.log(e.type, e.target, e.point, e.pixel, e.overlay);
      * });
-     * ```
-     * @example dblclick 双击
-     * ```typescript
      * map.addEventListener('dblclick', (e) => {
-     *   console.log('dblclick 事件触发', e);
      *   console.log(e.type, e.target, e.point, e.pixel, e.overlay);
      * });
-     * ```
-     * @example rightclick 右键点击
-     * ```typescript
      * map.addEventListener('rightclick', (e) => {
-     *   console.log('rightclick 事件触发', e);
      *   console.log(e.type, e.target, e.point, e.pixel, e.overlay);
      * });
-     * ```
-     * @example rightdblclick 右键双击
-     * ```typescript
      * map.addEventListener('rightdblclick', (e) => {
-     *   console.log('rightdblclick 事件触发', e);
      *   console.log(e.type, e.target, e.point, e.pixel, e.overlay);
      * });
      * ```
-     * @example mousemove 鼠标移动
+     * @example 鼠标交互事件
      * ```typescript
      * map.addEventListener('mousemove', (e) => {
-     *   console.log('mousemove 事件触发', e);
      *   console.log(e.type, e.target, e.point, e.pixel, e.overlay);
      * });
-     * ```
-     * @example mousedown 鼠标按下
-     * ```typescript
      * map.addEventListener('mousedown', (e) => {
-     *   console.log('mousedown 事件触发', e);
      *   console.log(e.type, e.target, e.point, e.pixel, e.overlay);
      * });
-     * ```
-     * @example mouseup 鼠标抬起
-     * ```typescript
      * map.addEventListener('mouseup', (e) => {
-     *   console.log('mouseup 事件触发', e);
      *   console.log(e.type, e.target, e.point, e.pixel, e.overlay);
      * });
-     * ```
-     * @example mouseover 鼠标移入
-     * ```typescript
      * map.addEventListener('mouseover', (e) => {
-     *   console.log('mouseover 事件触发', e);
      *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example mouseout 鼠标移出
-     * ```typescript
      * map.addEventListener('mouseout', (e) => {
-     *   console.log('mouseout 事件触发', e);
      *   console.log(e.type, e.target);
      * });
      * ```
-     * @example dragstart 拖拽开始
+     * @example 地图拖拽事件
      * ```typescript
      * map.addEventListener('dragstart', (e) => {
-     *   console.log('dragstart 事件触发', e);
      *   console.log(e.type, e.target, e.pixel, e.point);
      * });
-     * ```
-     * @example dragging 拖拽中
-     * ```typescript
      * map.addEventListener('dragging', (e) => {
-     *   console.log('dragging 事件触发', e);
      *   console.log(e.type, e.target, e.pixel, e.point);
      * });
-     * ```
-     * @example dragend 拖拽结束
-     * ```typescript
      * map.addEventListener('dragend', (e) => {
-     *   console.log('dragend 事件触发', e);
      *   console.log(e.type, e.target, e.pixel, e.point);
      * });
      * ```
-     * @example movestart 地图移动开始
+     * @example 地图移动事件
      * ```typescript
      * map.addEventListener('movestart', (e) => {
-     *   console.log('movestart 事件触发', e);
      *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example moving 地图移动中
-     * ```typescript
      * map.addEventListener('moving', (e) => {
-     *   console.log('moving 事件触发', e);
      *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example moveend 地图移动结束
-     * ```typescript
      * map.addEventListener('moveend', (e) => {
-     *   console.log('moveend 事件触发', e);
      *   console.log(e.type, e.target);
      * });
      * ```
-     * @example zoomstart 缩放开始
+     * @example 地图缩放事件
      * ```typescript
      * map.addEventListener('zoomstart', (e) => {
-     *   console.log('zoomstart 事件触发', e);
+     *   console.log(e.type, e.target);
+     * });
+     * map.addEventListener('zoomend', (e) => {
      *   console.log(e.type, e.target);
      * });
      * ```
-     * @example zooming 缩放中
+     * @example 地图缩放过程与越界事件
      * ```typescript
      * map.addEventListener('zooming', (e) => {
-     *   console.log('zooming 事件触发', e);
      *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example zoomend 缩放结束
-     * ```typescript
-     * map.addEventListener('zoomend', (e) => {
-     *   console.log('zoomend 事件触发', e);
-     *   console.log(e.type, e.target);
+     * map.addEventListener('zoomexceeded', (e) => {
+     *   console.log(e.type, e.target, e.targetZoom);
      * });
      * ```
-     * @example beforeaddoverlay 覆盖物添加前
-     * ```typescript
-     * map.addEventListener('beforeaddoverlay', (e) => {
-     *   console.log('beforeaddoverlay 事件触发', e);
-     *   console.log(e.type, e.target, e.overlay);
-     * });
-     * ```
-     * @example addoverlay 添加覆盖物
+     * @example 覆盖物事件
      * ```typescript
      * map.addEventListener('addoverlay', (e) => {
-     *   console.log('addoverlay 事件触发', e);
-     *   console.log(e.type, e.target, e.overlay);
+     *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example removeoverlay 移除覆盖物
-     * ```typescript
      * map.addEventListener('removeoverlay', (e) => {
-     *   console.log('removeoverlay 事件触发', e);
-     *   console.log(e.type, e.target, e.overlay);
+     *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example clearoverlays 清除所有覆盖物
-     * ```typescript
      * map.addEventListener('clearoverlays', (e) => {
-     *   console.log('clearoverlays 事件触发', e);
      *   console.log(e.type, e.target);
      * });
      * ```
-     * @example addcontrol 添加控件
+     * @example 覆盖物添加前事件
+     * ```typescript
+     * map.addEventListener('beforeaddoverlay', (e) => {
+     *   console.log(e.type, e.target);
+     * });
+     * ```
+     * @example 控件与右键菜单事件
      * ```typescript
      * map.addEventListener('addcontrol', (e) => {
-     *   console.log('addcontrol 事件触发', e);
-     *   console.log(e.type, e.target, e.control);
+     *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example removecontrol 移除控件
-     * ```typescript
      * map.addEventListener('removecontrol', (e) => {
-     *   console.log('removecontrol 事件触发', e);
-     *   console.log(e.type, e.target, e.control);
+     *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example addcontextmenu 添加右键菜单
-     * ```typescript
      * map.addEventListener('addcontextmenu', (e) => {
-     *   console.log('addcontextmenu 事件触发', e);
-     *   console.log(e.type, e.target, e.menu);
+     *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example removecontextmenu 移除右键菜单
-     * ```typescript
      * map.addEventListener('removecontextmenu', (e) => {
-     *   console.log('removecontextmenu 事件触发', e);
-     *   console.log(e.type, e.target, e.menu);
+     *   console.log(e.type, e.target);
      * });
      * ```
-     * @example maptypechange 地图类型变更
+     * @example 地图类型事件
      * ```typescript
      * map.addEventListener('maptypechange', (e) => {
-     *   console.log('maptypechange 事件触发', e);
-     *   console.log(e.type, e.target, e.mapType);
+     *   console.log(e.type, e.target, e.mapType, e.zoomLevel);
      * });
      * ```
-     * @example style_willchange 样式即将改变
+     * @example 样式与语言事件
      * ```typescript
      * map.addEventListener('style_willchange', (e) => {
-     *   console.log('style_willchange 事件触发', e);
      *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example style_loaded 样式加载完成
-     * ```typescript
      * map.addEventListener('style_loaded', (e) => {
-     *   console.log('style_loaded 事件触发', e);
      *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example style_loaded_error 样式加载失败
-     * ```typescript
      * map.addEventListener('style_loaded_error', (e) => {
-     *   console.log('style_loaded_error 事件触发', e);
      *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example style_loaded_timeout 样式加载超时
-     * ```typescript
      * map.addEventListener('style_loaded_timeout', (e) => {
-     *   console.log('style_loaded_timeout 事件触发', e);
      *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example language_change 语言切换
-     * ```typescript
      * map.addEventListener('language_change', (e) => {
-     *   console.log('language_change 事件触发', e);
      *   console.log(e.type, e.target);
      * });
      * ```
-     * @example tilesloaded 瓦片加载完成
+     * @example 瓦片加载与地图尺寸事件
      * ```typescript
      * map.addEventListener('tilesloaded', (e) => {
-     *   console.log('tilesloaded 事件触发', e);
      *   console.log(e.type, e.target);
      * });
-     * ```
-     * @example resize 地图尺寸变化
-     * ```typescript
      * map.addEventListener('resize', (e) => {
-     *   console.log('resize 事件触发', e);
      *   console.log(e.type, e.target, e.size);
      * });
      * ```

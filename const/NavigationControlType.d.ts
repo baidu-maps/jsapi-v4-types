@@ -1,10 +1,10 @@
 /**
- * 完整的大型导航控件（含方向键和缩放）
+ * 完整的大型导航控件（含方向键和缩放按钮、缩放层级滑块）
  */
 declare const BMAP_NAVIGATION_CONTROL_LARGE: 0;
 
 /**
- * 小型导航控件（仅方向键）
+ * 小型导航控件（包含方向键和缩放按钮，不包含缩放层级滑块）
  */
 declare const BMAP_NAVIGATION_CONTROL_SMALL: 1;
 

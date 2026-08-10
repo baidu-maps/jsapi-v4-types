@@ -23,5 +23,10 @@ declare namespace BMap {
      * @default 80
      */
     imageHeight?: number;
+    /**
+     * 是否显示分类导航
+     * @default false
+     */
+    showCatalog?: boolean;
   }
 }

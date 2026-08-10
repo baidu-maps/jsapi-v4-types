@@ -5,30 +5,32 @@ declare namespace BMap {
    */
   interface PolylineOptions {
     /**
-     * 折线颜色，格式为 '#xxxxxx'
-     * @default '#000'
+     * 折线颜色，格式为 '#xxxxxx'，默认跟随主题色（CSS 变量 `--bmap-color-primary`，缺省为 '#1677ff'）
      */
     strokeColor?: string;
     /**
-     * 折线的宽度，以像素为单位
-     * @default 2
+     * 折线的宽度，以像素为单位，默认值为 2
      */
     strokeWeight?: number;
     /**
-     * 折线的透明度，取值范围0 - 1
-     * @default 1
+     * 折线的透明度，取值范围0 - 1，默认值为 1
      */
     strokeOpacity?: number;
     /**
-     * 折线的样式，支持 `'solid'`、`'dashed'`、`'dotted'`
+     * 折线的样式
      * @default 'solid'
      */
-    strokeStyle?: string;
+    strokeStyle?: 'solid' | 'dashed' | 'dotted';
     /**
-     * 描边线端头类型，可选 `'round'`、`'butt'`、`'square'`
+     * 描边线端头类型
      * @default 'round'
      */
-    strokeLineCap?: string;
+    strokeLineCap?: 'round' | 'butt' | 'square';
+    /**
+     * 描边线连接处类型
+     * @default 'round'
+     */
+    strokeLineJoin?: 'round' | 'miter' | 'bevel';
     /**
      * 是否在调用 map.clearOverlays() 时清除此覆盖物
      * @default true
@@ -50,7 +52,7 @@ declare namespace BMap {
      */
     geodesic?: boolean;
     /**
-     * 跨180度经线时走右侧
+     * 跨180度经线时是否按最短路径绘制
      * @default false
      */
     linkRight?: boolean;
@@ -60,9 +62,39 @@ declare namespace BMap {
      */
     clip?: boolean;
     /**
+     * 输入坐标的坐标类型。未设置时使用全局 `BMap.coordType`。
+     */
+    coordType?: 'BMAP_COORD_BD09' | 'BMAP_COORD_GCJ02' | 'BMAP_COORD_WGS84';
+    /**
+     * 配置贴合折线的图标
+     */
+    icons?: IconSequence[];
+    /**
+     * 线纹理配置，用于沿折线重复绘制图片（如方向箭头），仅 WebGL 渲染模式支持
+     */
+    strokeTexture?: {
+      /** 纹理图片地址 */
+      url: string;
+      /**
+       * 纹理宽度，单位为像素
+       * @default 16
+       */
+      width?: number;
+      /**
+       * 纹理高度，单位为像素
+       * @default 16
+       */
+      height?: number;
+    };
+    /**
      * 虚线样式配置，如 [8, 4] 表示实线部分长8像素、间隙部分长4像素。
      * 默认虚线中实线和空隙的长度均为线宽的2倍
      */
     dashArray?: number[];
+    /**
+     * 覆盖物的初始层叠顺序，也可在实例上通过 `setZIndex()` 方法修改
+     * @default 0
+     */
+    zIndex?: number;
   }
 }

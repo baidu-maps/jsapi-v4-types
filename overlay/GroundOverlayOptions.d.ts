@@ -10,6 +10,16 @@ declare namespace BMap {
      */
     opacity?: number;
     /**
+     * 是否允许在调用 map.clearOverlays() 时清除此覆盖物
+     * @default true
+     */
+    enableMassClear?: boolean;
+    /**
+     * 是否响应鼠标事件
+     * @default true
+     */
+    enableClicking?: boolean;
+    /**
      * 叠加内容来源。type 为 'image' 时传图片地址，'video' 时传视频地址，'canvas' 时直接传 canvas 元素
      */
     url?: string | HTMLCanvasElement;
@@ -22,10 +32,20 @@ declare namespace BMap {
      */
     displayOnMaxLevel?: number;
     /**
+     * 图层图片地址，兼容旧版 imageURL 配置，新代码请使用 {@link GroundOverlayOptions#url}
+     * @deprecated 4.0 请使用 {@link GroundOverlayOptions#url}
+     */
+    imageURL?: string;
+    /**
      * 叠加内容类型
      * @default 'image'
      */
     type?: 'image' | 'video' | 'canvas';
+    /**
+     * 是否在普通覆盖物之上绘制
+     * @default false
+     */
+    top?: boolean;
     /**
      * 是否开启循环重绘，type 为 'canvas' 时生效。
      * 开启后每帧渲染前都会调用 drawHook 并重新采集 canvas 内容作为贴图，用于实现动态效果（如雷达扫描、水波动画）；

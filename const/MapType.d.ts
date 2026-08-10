@@ -12,7 +12,6 @@ declare const BMAP_SATELLITE_MAP: string;
  * 卫星与路网混合地图
  */
 declare const BMAP_HYBRID_MAP: string;
-
 /**
  * 地球卫星视图
  */

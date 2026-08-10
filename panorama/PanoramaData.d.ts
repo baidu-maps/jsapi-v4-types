@@ -7,22 +7,22 @@ declare namespace BMap {
     /**
      * 全景id
      */
-    id?: string;
+    id: string;
     /**
      * 全景的描述信息
      */
-    description?: string;
+    description: string;
     /**
      * 全景相邻道路信息
      */
-    links?: PanoramaLink[];
+    links: PanoramaLink[];
     /**
      * 全景的地理坐标
      */
-    position?: Point;
+    position: Point;
     /**
      * 全景图块信息
      */
-    tiles?: PanoramaTileData;
+    tiles: PanoramaTileData;
   }
 }

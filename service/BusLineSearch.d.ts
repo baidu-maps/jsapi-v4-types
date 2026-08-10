@@ -55,7 +55,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    setGetBusListCompleteCallback(callback: Function): void;
+    setGetBusListCompleteCallback(callback: (result: BusListResult) => void): void;
     /** 设置公交线路查询后的回调函数
      * @example
      * ```typescript
@@ -64,7 +64,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    setGetBusLineCompleteCallback(callback: Function): void;
+    setGetBusLineCompleteCallback(callback: (busLine: BusLine) => void): void;
     /** 公交列表结果页渲染后回调函数
      * @example
      * ```typescript
@@ -73,7 +73,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    setBusListHtmlSetCallback(callback: Function): void;
+    setBusListHtmlSetCallback(callback: (container: HTMLElement) => void): void;
     /** 公交线路结果页渲染后回调函数
      * @example
      * ```typescript
@@ -82,7 +82,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    setBusLineHtmlSetCallback(callback: Function): void;
+    setBusLineHtmlSetCallback(callback: (container: HTMLElement) => void): void;
     /** 添加公交线时回调函数
      * @example
      * ```typescript
@@ -91,7 +91,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    setPolylinesSetCallback(callback: Function): void;
+    setPolylinesSetCallback(callback: (polyline: Polyline) => void): void;
     /** 添加公交站点时回调函数
      * @example
      * ```typescript
@@ -100,6 +100,6 @@ declare namespace BMap {
      * });
      * ```
      */
-    setMarkersSetCallback(callback: Function): void;
+    setMarkersSetCallback(callback: (markers: Marker[]) => void): void;
   }
 }

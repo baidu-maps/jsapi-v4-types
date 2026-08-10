@@ -12,7 +12,7 @@ declare namespace BMap {
      */
     accuracy?: number;
     /**
-     * 根据定位坐标点解析出的地址信息，可能为空（3.0新增）
+     * 根据定位坐标点解析出的地址信息
      */
     address?: GeolocationAddress;
     /**

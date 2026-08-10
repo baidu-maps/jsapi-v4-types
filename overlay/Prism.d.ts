@@ -5,7 +5,7 @@ declare namespace BMap {
   class Prism extends Overlay {
     /**
      * 创建棱柱覆盖物对象
-     * @param points 底面多边形的坐标点数组
+     * @param points 底面多边形的坐标点数组或多个坐标点数组
      * @param altitude 棱柱高度，单位为米
      * @param opts 可选参数
      * @example
@@ -37,9 +37,13 @@ declare namespace BMap {
      */
     setPath(path: Array<Point>): void;
     /**
-     * 返回底面多边形的坐标点数组
+     * 返回创建或设置棱柱时传入的底面路径。使用多坐标串创建时返回嵌套的坐标点数组
      */
-    getPath(): Point[];
+    getPath(): Array<Point> | Array<Array<Point>>;
+    /**
+     * 返回覆盖物的地理区域范围
+     */
+    getBounds(): Bounds;
     /**
      * 设置棱柱高度
      * @param altitude 高度，单位为米
@@ -105,6 +109,11 @@ declare namespace BMap {
      * 返回棱柱侧面透明度
      */
     getSideFillOpacity(): number;
+    /**
+     * 设置覆盖物的 zIndex
+     * @param zIndex 层叠顺序值
+     */
+    setZIndex(zIndex: number): void;
     /**
      * 允许覆盖物在 map.clearOverlays() 方法中被清除
      */

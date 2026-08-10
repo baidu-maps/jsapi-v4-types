@@ -10,7 +10,8 @@ declare namespace BMap {
      */
     anchor?: ControlAnchor;
     /**
-     * 控件的偏移值
+     * 控件相对于停靠位置的偏移量
+     * @default new BMap.Size(0, 0)
      */
     offset?: Size;
     /**
@@ -29,7 +30,8 @@ declare namespace BMap {
      */
     zoomInterval?: number;
     /**
-     * 鹰眼地图和主地图之间的空隙宽度像素值，默认值为 4
+     * 鹰眼地图和主地图之间的空隙宽度像素值
+     * @default 4
      */
     padding?: number;
   }

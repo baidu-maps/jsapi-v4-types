@@ -1,13 +1,13 @@
 declare namespace BMap {
   /**
-   * 此类表示地图上的地面叠加层，可叠加图片、视频或 Canvas 内容。
+   * 此类表示地图上的地面叠加层，支持图片、视频和 Canvas 内容
    */
   class GroundOverlay extends Overlay {
     /**
      * 创建地面叠加层覆盖物
      * @param bounds 叠加层显示的矩形区域
      * @param opts 可选参数
-     * @example
+     * @example 图片覆盖物
      * ```typescript
      * const bounds = new BMap.Bounds(
      *   new BMap.Point(116.390, 39.910),
@@ -68,9 +68,9 @@ declare namespace BMap {
      */
     setImageURL(url: string, bounds?: Bounds): void;
     /**
-     * 返回图层图片地址
+     * 获取图层内容来源，图片或视频类型的结果为资源地址，Canvas 类型的结果为 Canvas 元素
      */
-    getImageURL(): string;
+    getImageURL(): string | HTMLCanvasElement;
     /**
      * 设置图层显示的最小缩放级别
      * @param level 最小级别
@@ -97,22 +97,40 @@ declare namespace BMap {
      * 返回图层显示的最大缩放级别
      */
     getDisplayOnMaxLevel(): number;
-  }
-
-  /**
-   * 当 GroundOverlayOptions 的 type 为 `'canvas'` 时的扩展配置。
-   * @category 配置项
-     */
-  interface GroundOverlayCanvasOptions {
     /**
-     * 是否开启循环重绘
-     * @default false
+     * 设置覆盖物的 zIndex，如需始终置于普通覆盖物之上，使用 {@link GroundOverlayOptions#top}
+     * @param zIndex 层叠顺序值
      */
-    isReDraw?: boolean;
+    setZIndex(zIndex: number): void;
     /**
-     * Canvas 绘制回调函数，初始化时必须设置，通过 `this.canvas` 获取 canvas 对象
-     * @default null
+     * 允许覆盖物在 map.clearOverlays() 方法中被清除
      */
-    drawHook?: Function;
+    enableMassClear(): void;
+    /**
+     * 禁止覆盖物在 map.clearOverlays() 方法中被清除
+     */
+    disableMassClear(): void;
+    /**
+     * 返回覆盖物所在的地图实例
+     */
+    getMap(): Map;
+    /**
+     * 添加事件监听函数
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    addEventListener<K extends keyof GroundOverlayEventMap>(
+      event: K,
+      handler: (e: GroundOverlayEventMap[K]) => void
+    ): void;
+    /**
+     * 移除事件监听函数
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    removeEventListener<K extends keyof GroundOverlayEventMap>(
+      event: K,
+      handler: (e: GroundOverlayEventMap[K]) => void
+    ): void;
   }
 }

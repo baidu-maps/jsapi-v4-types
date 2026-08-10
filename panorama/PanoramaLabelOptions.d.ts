@@ -15,9 +15,9 @@ declare namespace BMap {
      */
     altitude?: number;
     /**
-     * 是否隐藏到场景点的距离。未设置 position 时距离始终隐藏
-     * @default false
+     * 是否显示标签到当前全景场景点的距离
+     * @default true
      */
-    hideDistance?: boolean;
+    displayDistance?: boolean;
   }
 }

@@ -16,5 +16,25 @@ declare namespace BMap {
      * 相邻全景的id
      */
     id?: string;
+    /**
+     * 相连道路的原始方向
+     */
+    dir?: number;
+    /**
+     * 结合全景正北偏移校正后的方向
+     */
+    refinedDir?: number;
+    /**
+     * 相邻全景的墨卡托横坐标
+     */
+    x?: number;
+    /**
+     * 相邻全景的墨卡托纵坐标
+     */
+    y?: number;
+    /**
+     * 相连道路的宽度
+     */
+    roadWidth?: number;
   }
 }

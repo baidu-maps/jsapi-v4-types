@@ -115,17 +115,17 @@ declare namespace BMap {
     getStrokeWeight(): number;
     /**
      * 设置多边形边线样式
-     * @param style 线样式，`'solid'` 实线或 `'dashed'` 虚线
+     * @param style 线样式
      * @example
      * ```typescript
      * polygon.setStrokeStyle('dashed');
      * ```
      */
-    setStrokeStyle(style: string): void;
+    setStrokeStyle(style: 'solid' | 'dashed' | 'dotted'): void;
     /**
      * 返回多边形边线样式
      */
-    getStrokeStyle(): string;
+    getStrokeStyle(): 'solid' | 'dashed' | 'dotted';
     /**
      * 返回覆盖物的地理区域范围
      */
@@ -139,6 +139,15 @@ declare namespace BMap {
      */
     disableEditing(): void;
     /**
+     * 设置覆盖物的 zIndex
+     * @param zIndex 层叠顺序值
+     * @example
+     * ```typescript
+     * polygon.setZIndex(10);
+     * ```
+     */
+    setZIndex(zIndex: number): void;
+    /**
      * 允许覆盖物在 map.clearOverlays() 方法中被清除
      */
     enableMassClear(): void;
@@ -150,12 +159,13 @@ declare namespace BMap {
      * 修改指定索引处的坐标点，索引从0开始
      * @param index 坐标点索引
      * @param point 新的坐标点
+     * @param deep 多坐标串（环）索引，多环多边形时指定要修改的环，省略时默认第一个环
      * @example
      * ```typescript
      * polygon.setPositionAt(1, new BMap.Point(116.390, 39.915));
      * ```
      */
-    setPositionAt(index: number, point: Point): void;
+    setPositionAt(index: number, point: Point, deep?: number): void;
     /**
      * 返回覆盖物所在的地图实例
      */

@@ -20,12 +20,18 @@ declare namespace BMap {
   interface OverlayMouseEvent<T = Overlay> extends OverlayBaseEvent<T> {
     /** 事件触发点相对地图容器的画面像素坐标 */
     pixel: Pixel;
-    /** 事件触发点的经纬度坐标 */
+    /**
+     * 事件触发点的经纬度坐标
+     */
     point: Point;
     /**
-     * 事件触发点的地理坐标
+     * 事件触发点的经纬度坐标
      */
     latLng: Point;
+    /**
+     * 事件触发点的墨卡托坐标
+     */
+    pointMC?: Point;
     /**
      * 原始 DOM 事件对象
      * 部分合成事件没有对应的 DOM 事件；触摸交互时该值可能为 TouchEvent
@@ -38,6 +44,45 @@ declare namespace BMap {
    * @category 事件
    */
   type GraphMouseOutEvent<T = Overlay> = OverlayBaseEvent<T> & Partial<OverlayMouseEvent<T>>;
+
+  /**
+   * 图形节点数据变化事件（lineupdate）
+   * @category 事件
+     */
+  interface GraphLineUpdateEvent<T = Overlay> extends OverlayBaseEvent<T> {
+    /** 发生变化的图形覆盖物实例 */
+    overlay?: T;
+    /** 变化来源动作，图形被移除时为 `'remove'` */
+    action?: string;
+  }
+
+  /**
+   * 图形编辑过程事件（editstart / editend），附带编辑位置坐标
+   * @category 事件
+     */
+  interface GraphEditEvent<T = Overlay> extends OverlayBaseEvent<T> {
+    /** 编辑位置的画面像素坐标 */
+    pixel?: Pixel;
+    /** 编辑位置的经纬度坐标 */
+    point?: Point;
+    /** 编辑位置的经纬度坐标 */
+    latLng?: Point;
+    /** 编辑位置的墨卡托坐标 */
+    pointMC?: Point;
+    /** 被编辑的图形覆盖物实例 */
+    overlay: T;
+  }
+
+  /**
+   * 图形编辑节点（顶点）事件，携带触发的顶点标注与其派发的原始事件
+   * @category 事件
+     */
+  interface GraphVertexEvent<T = Overlay> extends OverlayBaseEvent<T> {
+    /** 触发事件的顶点标注实例 */
+    overlay: Marker;
+    /** 顶点标注派发的原始事件对象 */
+    from: OverlayMouseEvent<Marker>;
+  }
 
   /**
    * Marker 支持的事件名与事件对象类型映射。
@@ -95,8 +140,104 @@ declare namespace BMap {
     rightdblclick: OverlayMouseEvent<T>;
     /** 图形被移除（如 `map.removeOverlay()`）时触发 */
     remove: OverlayBaseEvent<T>;
-    /** 图形的节点数据发生变化时触发 */
-    lineupdate: OverlayBaseEvent<T>;
+    /**
+     * 图形的节点数据发生变化时触发
+     */
+    lineupdate: GraphLineUpdateEvent<T>;
+    /**
+     * 开始编辑（拖拽图形节点）时触发，需先调用 `enableEditing()` 开启编辑
+     */
+    editstart: GraphEditEvent<T>;
+    /**
+     * 一次节点编辑结束时触发
+     */
+    editend: GraphEditEvent<T>;
+    /**
+     * 开始拖拽图形编辑节点时触发
+     */
+    linevertexdragstart: GraphVertexEvent<T>;
+    /**
+     * 拖拽图形编辑节点过程中持续触发
+     */
+    linevertexdragging: GraphVertexEvent<T>;
+    /**
+     * 拖拽图形编辑节点结束时触发
+     */
+    linevertexdragend: GraphVertexEvent<T>;
+    /**
+     * 删除图形编辑节点时触发
+     */
+    linevertexdel: GraphVertexEvent<T>;
+  }
+
+  /**
+   * GroundOverlay 的鼠标事件。3.0 的 click、dblclick 事件只保证基础事件字段，
+   * 4.0 会附带画面坐标和地理坐标。
+   * @category 事件
+   */
+  interface GroundOverlayMouseEvent extends OverlayBaseEvent<GroundOverlay> {
+    /**
+     * 事件触发点相对地图容器的画面像素坐标
+     */
+    pixel?: Pixel;
+    /**
+     * 事件触发点的经纬度坐标
+     */
+    point?: Point;
+    /**
+     * 事件触发点的经纬度坐标
+     */
+    latLng?: Point;
+    /**
+     * 事件触发点的墨卡托坐标
+     */
+    pointMC?: Point;
+    /**
+     * 原始 DOM 事件对象
+     */
+    domEvent?: MouseEvent | TouchEvent | null;
+  }
+
+  /** GroundOverlay 支持的事件名与事件对象类型映射 */
+  interface GroundOverlayEventMap {
+    /** 点击覆盖物时触发 */
+    click: GroundOverlayMouseEvent;
+    /** 双击覆盖物时触发 */
+    dblclick: GroundOverlayMouseEvent;
+    /**
+     * 右键点击覆盖物时触发
+     */
+    rightclick: GroundOverlayMouseEvent;
+    /**
+     * 右键双击覆盖物时触发
+     */
+    rightdblclick: GroundOverlayMouseEvent;
+    /**
+     * 在覆盖物上按下鼠标时触发
+     */
+    mousedown: GroundOverlayMouseEvent;
+    /**
+     * 在覆盖物上抬起鼠标时触发
+     */
+    mouseup: GroundOverlayMouseEvent;
+    /**
+     * 鼠标移入覆盖物时触发
+     */
+    mouseover: GroundOverlayMouseEvent;
+    /**
+     * 鼠标移出覆盖物时触发
+     */
+    mouseout: GroundOverlayMouseEvent;
+    /**
+     * 鼠标在覆盖物上移动时触发
+     */
+    mousemove: GroundOverlayMouseEvent;
+    /** 覆盖物被移除时触发 */
+    remove: OverlayBaseEvent<GroundOverlay>;
+    /**
+     * 覆盖物渲染数据发生变化时触发
+     */
+    lineupdate: GraphLineUpdateEvent<GroundOverlay>;
   }
 
   /** Polyline 支持的事件名与事件对象类型映射 */
@@ -105,7 +246,9 @@ declare namespace BMap {
   /** Polygon 支持的事件名与事件对象类型映射 */
   type PolygonEventMap = GraphEventMap<Polygon>;
 
-  /** Rectangle 支持的事件名与事件对象类型映射 */
+  /**
+   * Rectangle 支持的事件名与事件对象类型映射
+     */
   type RectangleEventMap = GraphEventMap<Rectangle>;
 
   /** Circle 支持的事件名与事件对象类型映射 */
@@ -114,12 +257,18 @@ declare namespace BMap {
   /**
    * Prism 支持的事件名与事件对象类型映射
      */
-  type PrismEventMap = GraphEventMap<Prism>;
+  type PrismEventMap = Omit<
+    GraphEventMap<Prism>,
+    'editstart' | 'editend' | 'linevertexdragstart' | 'linevertexdragging' | 'linevertexdragend' | 'linevertexdel'
+  >;
 
   /**
    * BezierCurve 支持的事件名与事件对象类型映射
      */
-  type BezierCurveEventMap = GraphEventMap<BezierCurve>;
+  type BezierCurveEventMap = Omit<
+    GraphEventMap<BezierCurve>,
+    'editstart' | 'editend' | 'linevertexdragstart' | 'linevertexdragging' | 'linevertexdragend' | 'linevertexdel'
+  >;
 
   /** Label 支持的事件名与事件对象类型映射 */
   interface LabelEventMap {

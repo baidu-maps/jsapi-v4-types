@@ -33,23 +33,33 @@ declare namespace BMap {
     /**
      * 设置全景的 id
      * @param id 全景 id
+     * @param options 切换配置项
      */
-    setId(id: string): void;
+    setId(id: string, options?: { animation?: boolean; fisheye?: boolean; animationType?: string; pov?: Partial<PanoramaPov> }): void;
+    /**
+     * 设置全景的 id 和场景类型
+     * @param id 全景 id
+     * @param type 场景类型
+     * @param options 切换配置项
+     */
+    setId(id: string, type: PanoramaSceneType, options?: { animation?: boolean; fisheye?: boolean; animationType?: string; pov?: Partial<PanoramaPov> }): void;
     /**
      * 设置全景的位置
      * @param position 经纬度坐标
      */
     setPosition(position: Point): void;
     /**
-     * 设置全景的视角
+     * 设置全景的视角；可只设置 heading，设置 pitch 时也必须提供 heading
      * @param pov 视角参数
+     * @param options 动画配置项
      */
-    setPov(pov: PanoramaPov): void;
+    setPov(pov: { heading: number; pitch?: number }, options?: { animation?: boolean }): void;
     /**
      * 设置全景的缩放级别
      * @param zoom 级别
+     * @param options 缩放配置项
      */
-    setZoom(zoom: number): void;
+    setZoom(zoom: number, options?: { noAnimation?: boolean }): void;
     /**
      * 开启鼠标滚轮缩放功能（仅 PC 端有效）
      */
@@ -67,6 +77,10 @@ declare namespace BMap {
      */
     hide(): void;
     /**
+     * 返回全景当前是否可见
+     */
+    getVisible(): boolean;
+    /**
      * 在全景场景内添加覆盖物
      * @param overlay 覆盖物（PanoramaLabel）
      */
@@ -79,7 +93,7 @@ declare namespace BMap {
     /**
      * 获取全景的类型（室外景返回 BMAP_PANORAMA_STREET_SCENE，室内景返回 BMAP_PANORAMA_INDOOR_SCENE）
      */
-    getSceneType(): number;
+    getSceneType(): PanoramaSceneType;
     /**
      * 设置全景可配置参数
      * @param opts 配置项
@@ -89,6 +103,43 @@ declare namespace BMap {
      * 设置全景外景场景点内可见的 POI 类型，默认为隐藏所有类型
      * @param poiType POI 类型常量
      */
-    setPanoramaPOIType(poiType: number): void;
+    setPanoramaPOIType(poiType: PanoramaPOIType): void;
+    /**
+     * 将当前全景画面导出为 Data URL；当前渲染器不支持截图时返回 undefined
+     * @param options 图片质量和 MIME 类型
+     */
+    capture(options?: { quality?: number; type?: string }): string | undefined;
+    /**
+     * 清除全部全景覆盖物
+     */
+    clearOverlays(): void;
+    /**
+     * 销毁全景实例
+     */
+    destroy(): void;
+    /**
+     * 注册事件监听
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    addEventListener<K extends keyof PanoramaEventMap>(event: K, handler: (e: PanoramaEventMap[K]) => void): void;
+    /**
+     * 注册尚未收录到事件映射中的事件监听
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    addEventListener(event: string, handler: Function): void;
+    /**
+     * 移除事件监听
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    removeEventListener<K extends keyof PanoramaEventMap>(event: K, handler: (e: PanoramaEventMap[K]) => void): void;
+    /**
+     * 移除尚未收录到事件映射中的事件监听
+     * @param event 事件名称
+     * @param handler 事件处理函数
+     */
+    removeEventListener(event: string, handler: Function): void;
   }
 }

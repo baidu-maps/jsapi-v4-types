@@ -10,8 +10,7 @@ declare namespace BMap {
      */
     anchor?: ControlAnchor;
     /**
-     * 控件的偏移值
-     * @default new BMap.Size(81, 18)
+     * 控件的偏移值，桌面端默认值为 new BMap.Size(81, 18)，移动端默认值为 new BMap.Size(75, 10)
      */
     offset?: Size;
   }

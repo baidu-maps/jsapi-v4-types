@@ -84,21 +84,22 @@ declare namespace BMap {
     getStrokeWeight(): number;
     /**
      * 设置折线样式
-     * @param style 线样式，`'solid'` 实线或 `'dashed'` 虚线
+     * @param style 线样式
      * @example
      * ```typescript
      * polyline.setStrokeStyle('dashed');
      * ```
      */
-    setStrokeStyle(style: string): void;
+    setStrokeStyle(style: 'solid' | 'dashed' | 'dotted'): void;
     /**
      * 返回折线样式
      */
-    getStrokeStyle(): string;
+    getStrokeStyle(): 'solid' | 'dashed' | 'dotted';
     /**
      * 返回折线的地理区域范围
+     * @param normalize 跨越世界边界时，是否将经度范围扩展为完整世界；默认为 false，保留跨 180° 经线的紧凑范围，传 true 时返回 [-180°, 180°] 的整世界范围。
      */
-    getBounds(): Bounds;
+    getBounds(normalize?: boolean): Bounds;
     /**
      * 开启折线编辑功能
      */

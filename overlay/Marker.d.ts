@@ -175,7 +175,7 @@ declare namespace BMap {
      * 添加事件监听函数
      * @param event 事件名称
      * @param handler 事件处理函数
-     * @example点击标注
+     * @example 点击标注
      * ```typescript
      * marker.addEventListener('click', (e) => {
      *   console.log(e.type, e.target, e.pixel, e.latLng);

@@ -1,25 +1,33 @@
 declare namespace BMap {
+  /** 定位成功事件 */
+  interface GeolocationControlSuccessEvent {
+    type: string;
+    target: GeolocationControl;
+    point: Point;
+    addressComponent: AddressComponent | null;
+  }
+
+  /** 定位失败事件 */
+  interface GeolocationControlErrorEvent {
+    type: string;
+    target: GeolocationControl;
+    code: number;
+  }
+
   /**
    * GeolocationControl 支持的事件名与事件对象类型映射
    */
   interface GeolocationControlEventMap {
     /** 定位成功后触发 */
-    locationSuccess: {
-      type: string;
-      target: GeolocationControl;
-      point: Point;
-      addressComponent: AddressComponent | null;
-    };
+    locationSuccess: GeolocationControlSuccessEvent;
     /** 定位失败后触发 */
-    locationError: { type: string; target: GeolocationControl; code: number };
+    locationError: GeolocationControlErrorEvent;
   }
 
   /**
-   * 此类是负责进行地图定位的控件，使用 HTML5 浏览器定位功能。
-   * 控件包含定位按钮和定位结果地址文字。
-   * 定位按钮尺寸为 32px x 32px。
-   * 定位结果地址文字的高度为 32px，在按钮右侧。
-   * anchor属性为整体停靠位置，包含结果地址文字，所以当停靠右侧时，offset从定位结果右侧计算。
+   * 此类表示使用浏览器定位功能的地图定位控件。
+   * 控件包含 32px x 32px 的定位按钮和位于按钮右侧、高度为 32px 的定位结果地址区域
+   * `anchor` 属性表示包含定位结果地址文字在内的整体停靠位置；停靠在右侧时，`offset` 从定位结果区域的右侧计算。
    */
   class GeolocationControl extends Control {
     /**

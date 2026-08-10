@@ -50,6 +50,9 @@ declare namespace BMap {
     /**
      * 定位开始前的回调函数，如果返回 false，则不再执行定位操作
      */
-    onLocationStart?: (onSuccess: Function, onFail: Function) => boolean | void;
+    onLocationStart?: (
+      onSuccess: (position: GeolocationPosition) => void,
+      onFail: () => void
+    ) => boolean | void;
   }
 }

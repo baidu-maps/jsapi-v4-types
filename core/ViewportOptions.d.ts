@@ -4,12 +4,12 @@ declare namespace BMap {
    */
   interface ViewportOptions {
     /**
-     * 是否禁用动画效果移动地图。当调整后的级别与当前地图级别一致时，将使用动画效果移动地图
-     * @default false
+     * 是否启用动画效果移动地图，当调整后的级别与当前地图级别一致时，将使用动画效果移动地图
+     * @default true
      */
-    noAnimation?: boolean;
+    enableAnimation?: boolean;
     /**
-     * 视野调整的预留边距，例如： margins: [30, 20, 0, 20] 表示坐标点会限制在上述区域内
+     * 视野调整的预留边距，依次为上、右、下、左，例如： margins: [30, 20, 0, 20] 表示坐标点会限制在上述区域内
      */
     margins?: number[];
     /**
@@ -18,9 +18,8 @@ declare namespace BMap {
      */
     zoomFactor?: number;
     /**
-     * 改变地图视野的延迟执行时间，单位毫秒，此延时仅针对动画效果有效
-     * @default 200
+     * 视野调整结束后的回调函数
      */
-    delay?: number;
+    callback?: () => void;
   }
 }

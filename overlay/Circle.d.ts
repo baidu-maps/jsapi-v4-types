@@ -121,17 +121,17 @@ declare namespace BMap {
     getStrokeWeight(): number;
     /**
      * 设置圆形边线样式
-     * @param style 线样式，`'solid'` 实线或 `'dashed'` 虚线
+     * @param style 线样式
      * @example
      * ```typescript
      * circle.setStrokeStyle('dashed');
      * ```
      */
-    setStrokeStyle(style: string): void;
+    setStrokeStyle(style: 'solid' | 'dashed' | 'dotted'): void;
     /**
      * 返回圆形边线样式
      */
-    getStrokeStyle(): string;
+    getStrokeStyle(): 'solid' | 'dashed' | 'dotted';
     /**
      * 开启编辑功能
      */
@@ -140,6 +140,15 @@ declare namespace BMap {
      * 关闭编辑功能
      */
     disableEditing(): void;
+    /**
+     * 设置覆盖物的 zIndex
+     * @param zIndex 层叠顺序值
+     * @example
+     * ```typescript
+     * circle.setZIndex(10);
+     * ```
+     */
+    setZIndex(zIndex: number): void;
     /**
      * 允许覆盖物在 map.clearOverlays() 方法中被清除
      */

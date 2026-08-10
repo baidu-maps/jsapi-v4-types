@@ -12,7 +12,8 @@ declare const BMAP_UNIT_IMPERIAL: 'us';
  * 比例尺长度单位，使用 `BMAP_UNIT_*` 常量传入
  * @example
  * ```typescript
- * new BMap.ScaleControl({ unit: BMAP_UNIT_IMPERIAL });
+ * const scaleControl = new BMap.ScaleControl();
+ * scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
  * ```
  */
 type LengthUnit =

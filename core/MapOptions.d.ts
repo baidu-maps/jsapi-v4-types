@@ -99,12 +99,6 @@ declare namespace BMap {
      */
     zoomCenter?: Point;
     /**
-     * 是否允许底图标注可点。开启后当点击到底图图标时，map 的 `click` 事件参数会包含点击的信息，同时会有点击气泡效果。
-     * @default false
-     */
-    enableIconClick?: boolean;
-
-    /**
      * 点击底图标注时，是否显示信息窗，在enableIconClick为true时生效
      * @default false
      */
@@ -126,7 +120,6 @@ declare namespace BMap {
     enableAdaptiveMinZoom?: boolean;
     /**
      * 是否开启底图可点功能
-     * @deprecated 4.0 在4.0中，启用此选项时，效果等价于同时启用enableIconClick和enableIconInfoWindow
      * @default 3.0版本默认为true，4.0后默认为false
      */
     enableMapClick?: boolean;
