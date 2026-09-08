@@ -1,6 +1,7 @@
 declare namespace BMap {
   /**
-   * 用于获取驾车路线规划方案。
+   * 驾车路线规划服务类，用于获取两点间的驾车出行方案，支持途经点、多种路线策略（如避开高速、最少费用等）。
+   * 适用于地图应用中的路线导航、行车路线展示、出行方案推荐等场景，可将检索结果自动渲染为地图上的路线和标注，或通过面板展示详细方案列表。
    */
   class DrivingRoute {
     /**
@@ -151,6 +152,20 @@ declare namespace BMap {
      * ```
      */
     setResultsHtmlSetCallback(callback: (container: HTMLElement) => void): void;
+    /**
+     * 设置路线折线的样式，配置项会增量合并到 renderOptions.polylineStyle，
+     * 并立即刷新已经绘制在地图上的折线，无需重新检索
+     * @param style 折线样式配置
+     * @example
+     * ```typescript
+     * drivingRoute.setPolylineStyle({
+     *   strokeColor: '#1677ff',
+     *   strokeWeight: 8,
+     *   highlight: { strokeColor: '#ff4d4f' },
+     * });
+     * ```
+     */
+    setPolylineStyle(style: RoutePolylineStyle): void;
     /**
      * 返回状态码
      */

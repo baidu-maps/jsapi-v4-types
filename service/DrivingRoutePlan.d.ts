@@ -1,6 +1,6 @@
 declare namespace BMap {
   /**
-   * 此类表示一条DrivingRouteLine出行方案。通过DrivingRouteResult.getPlan()方法获得。
+   * 此类表示一条驾车出行方案。通过DrivingRouteResult.getPlan()方法获得。
      */
   interface DrivingRoutePlan {
     /** 返回方案包含的线路的个数 */

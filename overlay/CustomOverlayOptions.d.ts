@@ -24,15 +24,15 @@ declare namespace BMap {
      */
     offsetY?: number;
     /**
-     * 旋转角度，单位度
-     * @default 0
-     */
-    rotation?: number;
-    /**
      * 初始化旋转角度
      * @default 0
      */
     rotationInit?: number;
+    /**
+     * 旋转角度超过 90 度且小于 270 度时是否翻转，避免内容倒置
+     * @default false
+     */
+    rotationFlip?: boolean;
     /**
      * 显示的最小缩放级别
      */
@@ -80,5 +80,15 @@ declare namespace BMap {
      * @default false
      */
     enableDraggingMap?: boolean;
+    /**
+     * 是否延迟一帧再显示，用于解决 DOM 自适应宽度问题
+     * @default false
+     */
+    nextTick?: boolean;
+    /**
+     * 是否与地图同步更新（跟随地图每次重绘同步刷新位置），开启后覆盖物位置更新将不再走默认的坐标转换逻辑
+     * @default false
+     */
+    synUpdate?: boolean;
   }
 }

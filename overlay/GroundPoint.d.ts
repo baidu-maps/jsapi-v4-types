@@ -2,7 +2,7 @@ declare namespace BMap {
   /**
    * 贴地点覆盖物，继承 GroundOverlay。
      */
-  class GroundPoint extends Overlay {
+  class GroundPoint extends GroundOverlay {
     /**
      * 创建贴地点覆盖物，该覆盖物的大小为墨卡托坐标系下的实际大小，屏幕空间的大小会随着地图的缩放级别变化而变化。
      * @param point 地理坐标点

@@ -46,5 +46,29 @@ declare namespace BMap {
      * @default false
      */
     enableMaximize?: boolean;
+    /**
+     * 信息窗相对于地图容器 top、right、bottom、left 四个方向的边距
+     */
+    margin?: number[];
+    /**
+     * 信息窗相对于地图左上、右上、右下、左下四个方向的避让区域
+     */
+    collisions?: number[];
+    /**
+     * 信息窗关闭之前的回调函数
+     */
+    onClosing?: () => void;
+    /**
+     * 是否启用信息窗口的搜索工具
+     */
+    enableSearchTool?: boolean;
+    /**
+     * 信息窗头部内容，支持 HTML。仅在 4.0 中生效，3.0 下接收该参数但不渲染
+     */
+    headerContent?: string;
+    /**
+     * 是否允许信息窗内容区域滚动
+     */
+    enableContentScroll?: boolean;
   }
 }

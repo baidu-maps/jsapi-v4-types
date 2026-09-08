@@ -4,7 +4,7 @@ declare namespace BMap {
    */
   class Map {
     /**
-     * 在指定的容器内创建地图实例，之后需要调用Map.centerAndZoom()方法对地图进行初始化。未进行初始化的地图将不能进行任何操作。
+     * 在指定的容器内创建地图实例。
      * @param container Map对象的容器可以是DOM元素对象或容器的ID
      * @param options 地图初始化选项
      * @example

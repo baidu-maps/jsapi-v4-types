@@ -174,5 +174,9 @@ declare namespace BMap {
      * @default 0.6
      */
     fillOpacity?: number;
+    /**
+     * 行政区边界数据请求完成并绘制到地图后的回调
+     */
+    onComplete?: () => void;
   }
 }

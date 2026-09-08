@@ -6,7 +6,7 @@ declare namespace BMap {
     /**
      * 结果呈现设置
      */
-    renderOptions?: RenderOptions;
+    renderOptions?: RouteRenderOptions;
     /**
      * 市内公交的换乘策略
      */
@@ -23,6 +23,11 @@ declare namespace BMap {
      * 每页返回的方案个数，范围 1 - 5
      */
     pageCapacity?: number;
+    /**
+     * 是否显示实时路况
+     * @default false
+     */
+    enableTraffic?: boolean;
     /**
      * 检索完成后的回调函数
      */

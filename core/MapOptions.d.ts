@@ -105,6 +105,13 @@ declare namespace BMap {
     enableIconInfoWindow?: boolean;
 
     /**
+     * 底图poi可点时，鼠标 hover 以及点击选中标注后是否将文字高亮为蓝色，在 enableMapClick 为 true 时生效。
+     * 置为 false 后，hover 只将鼠标指针变为 pointer，点击也只保留选中标注的常驻显示，文字始终保持底图样式的配色，适用于个性化底图场景。
+     * @default true
+     */
+    enableIconHighlight?: boolean;
+
+    /**
      * 配置地图显示元素。该参数详细信息请参见 setDisplayOptions 方法。
      */
     displayOptions?: DisplayOptions;

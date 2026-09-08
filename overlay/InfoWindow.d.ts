@@ -37,6 +37,15 @@ declare namespace BMap {
      */
     setHeight(height: number): void;
     /**
+     * 设置信息窗口最大化时的宽度
+     * @param width 最大化宽度，单位像素，取值范围 220 - 730
+     * @example
+     * ```typescript
+     * infoWindow.setMaxWidth(500);
+     * ```
+     */
+    setMaxWidth(width: number): void;
+    /**
      * 重绘信息窗口，当窗口内容发生变化时调用
      */
     redraw(): void;
@@ -82,6 +91,10 @@ declare namespace BMap {
      * 返回信息窗口的打开状态
      */
     isOpen(): boolean;
+    /**
+     * 返回信息窗口的偏移值
+     */
+    getOffset(): Size;
     /**
      * 设置信息窗口最大化时显示的内容，支持HTML内容
      * @param content 最大化内容

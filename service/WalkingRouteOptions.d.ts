@@ -6,7 +6,7 @@ declare namespace BMap {
     /**
      * 结果呈现设置
      */
-    renderOptions?: RenderOptions;
+    renderOptions?: RouteRenderOptions;
     /**
      * 检索完成后的回调函数
      */

@@ -10,7 +10,9 @@ declare namespace BMap {
   }
 
   /**
-   * 此类表示一个行政区域的边界。
+   * 行政区域边界查询服务类，用于按行政区域名称（省/直辖市/地级市/县）查询其边界坐标点串。
+   * 适用于在地图上绘制行政区域轮廓等场景。
+   * @deprecated 4.0 已废弃，请使用 {@link DistrictLayer} 代替
    */
   class Boundary {
     /**

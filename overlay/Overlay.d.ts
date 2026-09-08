@@ -40,5 +40,13 @@ declare namespace BMap {
      * 隐藏覆盖物。对于自定义覆盖物，此方法会自动将initialize方法返回的HTML元素样式的display属性设置为none
      */
     hide(): void;
+    /**
+     * 获取当前覆盖物所在的地图对象
+     */
+    getMap(): Map;
+    /**
+     * 析构方法，当确定覆盖物被移除后不再使用时，可显式调用此方法以降低内存使用
+     */
+    dispose(): void;
   }
 }

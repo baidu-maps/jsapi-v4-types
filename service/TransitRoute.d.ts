@@ -1,6 +1,7 @@
 declare namespace BMap {
   /**
-   * 用于获取公交路线规划方案，支持市内公交和跨城公交。
+   * 公交路线规划服务类，用于获取两点间的公交出行方案，支持地铁、市内公交和跨城公交（飞机、火车、大巴）换乘方案。
+   * 适用于地图应用中的公交出行导航、多方案对比展示等场景，可将检索结果自动渲染为地图上的路线和标注，或通过面板展示详细方案列表。
    */
   class TransitRoute {
     /**
@@ -175,6 +176,21 @@ declare namespace BMap {
      * ```
      */
     setResultsHtmlSetCallback(callback: (container: HTMLElement) => void): void;
+    /**
+     * 设置路线折线的样式，配置项会增量合并到 renderOptions.polylineStyle，
+     * 并立即刷新已经绘制在地图上的折线，无需重新检索
+     * @param style 折线样式配置
+     * @example
+     * ```typescript
+     * transitRoute.setPolylineStyle({
+     *   transit: { strokeColor: '#1677ff', strokeWeight: 8 },
+     *   walking: { strokeColor: '#52c41a' },
+     *   // 关闭公交折线内部的白色装饰线
+     *   decorate: null,
+     * });
+     * ```
+     */
+    setPolylineStyle(style: RoutePolylineStyle): void;
     /**
      * 返回状态码
      */

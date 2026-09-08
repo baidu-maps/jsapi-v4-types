@@ -49,5 +49,32 @@ declare namespace BMap {
      * 鼠标移到标注上时显示的标题文字
      */
     title?: string;
+    /**
+     * 是否将标注置于其他标注之上。默认情况下纬度低的标注会盖住纬度高的标注
+     * @default false
+     */
+    isTop?: boolean;
+    /**
+     * 标注所用的文本对象
+     */
+    label?: Label;
+    /**
+     * 是否限制拖拽区域
+     * @default false
+     */
+    restrictDraggingArea?: boolean;
+    /**
+     * 标注的层叠顺序值
+     */
+    zIndex?: number;
+    /**
+     * 是否自动跟随地图旋转角度联动
+     * @default false
+     */
+    autoFollowHeadingChanged?: boolean;
+    /**
+     * 图标的入场动画名称
+     */
+    startAnimation?: string;
   }
 }

@@ -61,6 +61,16 @@ declare namespace BMap {
   }
 
   /**
+   * 缩放超出允许范围事件
+     * @hidden
+   * @category 事件
+   */
+  interface MapZoomExceededEvent extends MapBaseEvent {
+    /** 本次操作试图到达的缩放级别 */
+    targetZoom: number;
+  }
+
+  /**
    * 拖拽类事件，附带画面坐标和地理坐标。
    * 适用于：dragstart、dragging、dragend
    * @category 事件

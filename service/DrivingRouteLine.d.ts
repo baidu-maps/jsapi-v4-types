@@ -1,7 +1,10 @@
 declare namespace BMap {
   /**
-   * 此类用于获取驾车路线规划方案（支持途经点）。
-     */
+   * 驾车路线规划服务类，用于获取两点间的驾车出行方案，支持途经点设置。
+   * 适用于地图应用中的驾车导航、路线展示等场景。
+     * @deprecated 4.0 已废弃，请使用 {@link DrivingRoute} 代替
+   * @hidden
+   */
   class DrivingRouteLine {
     /**
      * 创建一个驾车导航实例，location表示检索区域
@@ -14,7 +17,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    constructor(location: Map | Point | string, opts?: DrivingRouteOptions);
+    constructor(location: Map | Point | string, opts?: DrivingRouteLineOptions);
     /** 发起检索，支持途经点
      * @example
      * ```typescript

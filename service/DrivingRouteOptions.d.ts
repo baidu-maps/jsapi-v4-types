@@ -6,11 +6,21 @@ declare namespace BMap {
     /**
      * 结果呈现设置
      */
-    renderOptions?: RenderOptions;
+    renderOptions?: RouteRenderOptions;
     /**
      * 驾车路线规划策略
      */
     policy?: DrivingPolicy;
+    /**
+     * 是否显示多种（备选）方案，仅在非 GL 模式下生效
+     * @default false
+     */
+    alternatives?: boolean;
+    /**
+     * 是否显示实时路况
+     * @default true（3.0），false（4.0）
+     */
+    enableTraffic?: boolean;
     /**
      * 检索完成后的回调函数
      */

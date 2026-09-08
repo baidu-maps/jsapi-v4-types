@@ -172,6 +172,25 @@ declare namespace BMap {
      */
     getRotation(): number;
     /**
+     * 设置标注的旋转原点角度
+     * @param angle 正北方向顺时针旋转角度，取值范围 [0, 360]
+     */
+    setRotationOrigin(angle: number): void;
+    /**
+     * 设置标注的重要性权重。当开启避让检测且多个标注相互叠加时，权重小的标注将被隐藏
+     * @param rank 权重值，数值越高，权重越高
+     */
+    setRank(rank: number): void;
+    /**
+     * 获取标注的重要性权重
+     */
+    getRank(): number;
+    /**
+     * 设置标注的属性选项
+     * @param options 标注属性
+     */
+    setOptions(options: MarkerOptions): void;
+    /**
      * 添加事件监听函数
      * @param event 事件名称
      * @param handler 事件处理函数
