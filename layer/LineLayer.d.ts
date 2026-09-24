@@ -186,6 +186,7 @@ declare namespace BMap {
 
   /**
    * 线图层，支持实线、虚线、描边线、纹理贴图线、间隔图标填充
+   * @deprecated 已废弃，建议使用 {@link PolylineLayer} 替代
      */
   class LineLayer {
     /**

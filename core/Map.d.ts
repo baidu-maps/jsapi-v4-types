@@ -1061,6 +1061,18 @@ declare namespace BMap {
         | FillLayer
         | PointShapeLayer
         | PointIconLayer
+        | WebGLCustomLayer
+        | ThreejsLayer
+        | DeckglLayer
+        | PointLayer
+        | PolylineLayer
+        | PolygonLayer
+        | TextLayer
+        | BarLayer
+        | Heatmap
+        | FlyLineLayer
+        | ClusterLayer
+        | TrackLine
     ): void;
     /**
      * 统一移除图层方法，自动根据图层类型分发到对应处理逻辑
@@ -1083,6 +1095,18 @@ declare namespace BMap {
         | FillLayer
         | PointShapeLayer
         | PointIconLayer
+        | WebGLCustomLayer
+        | ThreejsLayer
+        | DeckglLayer
+        | PointLayer
+        | PolylineLayer
+        | PolygonLayer
+        | TextLayer
+        | BarLayer
+        | Heatmap
+        | FlyLineLayer
+        | ClusterLayer
+        | TrackLine
     ): void;
 
     /**

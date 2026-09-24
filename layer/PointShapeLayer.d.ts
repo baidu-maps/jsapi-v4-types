@@ -149,6 +149,7 @@ declare namespace BMap {
 
   /**
    * 点形状图层，使用2D几何图形（圆形、方形、三角形等）渲染点数据
+   * @deprecated 已废弃，建议使用 {@link PointLayer}（形状模式）替代
      */
   class PointShapeLayer {
     /**

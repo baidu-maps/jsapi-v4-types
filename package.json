@@ -1,6 +1,6 @@
 {
   "name": "@baidumap/jsapi-v4-types",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "TypeScript type declarations for Baidu Map JSAPI 4.0",
   "types": "index.d.ts",
   "keywords": [

@@ -129,6 +129,7 @@ declare namespace BMap {
 
   /**
    * 点图标图层，支持点图标的渲染
+   * @deprecated 已废弃，建议使用 {@link PointLayer}（图标模式）替代
      */
   class PointIconLayer {
     /**

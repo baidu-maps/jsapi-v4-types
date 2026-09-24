@@ -165,7 +165,7 @@ declare namespace BMap {
      * });
      * ```
      */
-    setPolylineStyle(style: RoutePolylineStyle): void;
+    setPolylineStyle(style: PolylineOptions): void;
     /**
      * 返回状态码
      */

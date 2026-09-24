@@ -91,6 +91,14 @@ map.addOverlay(marker);
 | `DOMLayer` | 自定义 DOM 覆盖物图层 |
 | `MVTLayer` | 矢量瓦片图层 |
 
+### 可视化（Visual）
+
+| 类名 | 说明 |
+|------|------|
+| `WebGLCustomLayer` | 自定义着色器图层，传 GLSL 源码与数据即可自绘 |
+| `ThreejsLayer` | three.js 接入图层，用 three 场景图绘制 3D 内容 |
+| `DeckglLayer` | deck.gl 接入图层，把 deck 图层画进地图 |
+
 ### 覆盖物（Overlay）
 
 | 类名 | 说明 |

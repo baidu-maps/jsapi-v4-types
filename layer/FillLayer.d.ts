@@ -210,6 +210,7 @@ declare namespace BMap {
 
   /**
    * 面填充图层，支持纯色填充、描边、纹理（掩膜或贴图）填充
+   * @deprecated 已废弃，建议使用 {@link PolygonLayer} 替代
      */
   class FillLayer {
     /**
