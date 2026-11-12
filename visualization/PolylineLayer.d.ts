@@ -146,11 +146,8 @@ declare namespace BMap {
     maxZoom?: number;
     /** 图层参考中心点，规避大坐标浮点抖动 */
     referCenter?: Point;
-    /**
-     * 绘制阶段，图层绘制在该阶段之后（即叠在其上）。
-     * 不设表示默认落点：覆盖物之后、3D 楼块之前
-     */
-    renderStage?: 'building' | 'poi' | null;
+    /** 绘制阶段，取值见 {@link RenderStage} */
+    renderStage?: RenderStage;
   }
 
   /**

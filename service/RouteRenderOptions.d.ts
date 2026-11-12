@@ -5,7 +5,7 @@ declare namespace BMap {
   interface RouteRenderOptions extends RenderOptions {
     /**
      * 路线折线的样式。仅对使用 Polyline 绘制路线的服务类生效，即 DrivingRoute、WalkingRoute、
-     * RidingRoute、TransitRoute。
+     * RidingRoute、EBikeRoute、TransitRoute。
      * 开启 enableTraffic 后按路况分段着色的折线不受此配置影响。
      * @example
      * ```typescript

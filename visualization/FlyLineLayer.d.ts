@@ -125,8 +125,8 @@ declare namespace BMap {
     maxZoom?: number;
     /** 图层参考中心点，规避大坐标浮点抖动 */
     referCenter?: Point;
-    /** 绘制阶段，`null` / `'building'` / `'poi'`，不设为默认落点 */
-    renderStage?: 'building' | 'poi' | null;
+    /** 绘制阶段，取值见 {@link RenderStage} */
+    renderStage?: RenderStage;
   }
 
   /**

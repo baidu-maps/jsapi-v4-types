@@ -482,11 +482,8 @@ declare namespace BMap {
      * @default 21
      */
     maxZoom?: number;
-    /**
-     * 绘制阶段，图层绘制在该阶段之后（即叠在其上）。
-     * 不设表示默认落点：覆盖物之后、3D 楼块之前
-     */
-    renderStage?: 'building' | 'poi' | null;
+    /** 绘制阶段，取值见 {@link RenderStage} */
+    renderStage?: RenderStage;
   }
 
   /**
